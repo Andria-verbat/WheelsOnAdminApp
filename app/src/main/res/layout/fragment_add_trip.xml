@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/home_screen_bg"
+    tools:context=".ui.home.trips.AddTripFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Trips"
+        android:fontFamily="@font/century_gothic"
+        android:textSize="32sp"
+        android:id="@+id/textDrivers"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create your trip"
+        android:fontFamily="@font/century_gothic"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="80dp"
+        android:id="@+id/textManage"
+        android:layout_below="@id/textDrivers"
+        android:textColor="@color/white"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textManage">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:hint="Trip From Location"
+                app:boxStrokeColor="@color/button_dark"
+                android:textColorHint="@color/grey"
+                android:id="@+id/textInputFullName"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etFromLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:editable="false"
+                    android:fontFamily="@font/century_gothic"
+                    android:textColorHighlight="@color/white"
+                    android:background="@color/transparent"
+                    android:textColor="@color/button_dark"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Trip To Location"
+                app:boxStrokeColor="@color/button_dark"
+                android:textColorHint="@color/grey"
+                android:id="@+id/textToLocation"
+                android:layout_marginStart="20dp"
+                android:layout_below="@id/textInputFullName"
+                android:layout_marginEnd="20dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etToLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:editable="false"
+                    android:fontFamily="@font/century_gothic"
+                    android:textColorHighlight="@color/white"
+                    android:background="@color/transparent"
+                    android:textColor="@color/button_dark"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <FrameLayout
+                android:id="@+id/frameDriver"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textToLocation"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/spinner_border">
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spinnerDriver"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_height="wrap_content"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|center"
+                    android:src="@drawable/ic_baseline_arrow_drop_down_24"
+                    app:tint="@color/blue_dark" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/frameVehicle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/frameDriver"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/spinner_border">
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spinnerVehicle"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|center"
+                    android:src="@drawable/ic_baseline_arrow_drop_down_24"
+                    app:tint="@color/blue_dark" />
+            </FrameLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Trip Starts On"
+                android:id="@+id/textInputStart"
+                android:layout_below="@+id/frameVehicle"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                app:boxStrokeColor="@color/button_dark"
+                android:textColorHint="@color/grey">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/eTripStartDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:editable="false"
+                    android:textColorHighlight="@color/white"
+                    android:fontFamily="@font/century_gothic"
+                    android:background="@color/transparent"
+                    android:textColor="@color/button_dark"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Trip Ends On"
+                android:id="@+id/textInputEnd"
+                android:layout_below="@+id/textInputStart"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                app:boxStrokeColor="@color/button_dark"
+                android:textColorHint="@color/grey">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etTripEndDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:editable="false"
+                    android:textColorHighlight="@color/white"
+                    android:fontFamily="@font/century_gothic"
+                    android:background="@color/transparent"
+                    android:textColor="@color/button_dark"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="PickUp Time"
+                android:id="@+id/textPickUp"
+                android:layout_below="@+id/textInputEnd"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                app:boxStrokeColor="@color/button_dark"
+                android:textColorHint="@color/grey">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPickUpTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:editable="false"
+                    android:textColorHighlight="@color/white"
+                    android:fontFamily="@font/century_gothic"
+                    android:background="@color/transparent"
+                    android:textColor="@color/button_dark"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Pickup Address"
+                app:boxStrokeColor="@color/button_dark"
+                android:textColorHint="@color/grey"
+                android:id="@+id/textPickUpAddress"
+                android:layout_below="@+id/textPickUp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPickUpAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/century_gothic"
+                    android:textColorHighlight="@color/white"
+                    android:background="@color/transparent"
+                    android:textColor="@color/button_dark"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Drop Address"
+                app:boxStrokeColor="@color/button_dark"
+                android:textColorHint="@color/grey"
+                android:id="@+id/textDropAddress"
+                android:layout_below="@+id/textPickUpAddress"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etDropAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/century_gothic"
+                    android:textColorHighlight="@color/white"
+                    android:background="@color/transparent"
+                    android:textColor="@color/button_dark"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Contact Person"
+                app:boxStrokeColor="@color/button_dark"
+                android:textColorHint="@color/grey"
+                android:id="@+id/textPrimaryContactPerson"
+                android:layout_below="@+id/textDropAddress"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPrimaryContactPerson"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/century_gothic"
+                    android:textColorHighlight="@color/white"
+                    android:background="@color/transparent"
+                    android:textColor="@color/button_dark"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Primary Contact number"
+                app:boxStrokeColor="@color/button_dark"
+                android:textColorHint="@color/grey"
+                android:id="@+id/textPrimaryContactNumber"
+                android:layout_below="@+id/textPrimaryContactPerson"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPrimaryContactNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/century_gothic"
+                    android:textColorHighlight="@color/white"
+                    android:background="@color/transparent"
+                    android:textColor="@color/button_dark"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Secondary Contact number"
+                app:boxStrokeColor="@color/button_dark"
+                android:textColorHint="@color/grey"
+                android:id="@+id/textSecondaryContactNumber"
+                android:layout_below="@+id/textPrimaryContactNumber"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etSecondaryContactNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/century_gothic"
+                    android:textColorHighlight="@color/white"
+                    android:background="@color/transparent"
+                    android:textColor="@color/button_dark"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Trip Amount"
+                app:boxStrokeColor="@color/button_dark"
+                android:textColorHint="@color/grey"
+                android:id="@+id/textTripAmount"
+                android:layout_below="@+id/textSecondaryContactNumber"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etTripAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:fontFamily="@font/century_gothic"
+                    android:textColorHighlight="@color/white"
+                    android:background="@color/transparent"
+                    android:textColor="@color/button_dark"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Rate per KM"
+                app:boxStrokeColor="@color/button_dark"
+                android:textColorHint="@color/grey"
+                android:id="@+id/textRateKm"
+                android:layout_below="@+id/textTripAmount"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etRateKm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:fontFamily="@font/century_gothic"
+                    android:textColorHighlight="@color/white"
+                    android:background="@color/transparent"
+                    android:textColor="@color/button_dark"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Comments"
+                app:boxStrokeColor="@color/button_dark"
+                android:textColorHint="@color/grey"
+                android:id="@+id/textComments"
+                android:layout_below="@+id/textRateKm"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="50dp"
+                android:layout_marginEnd="20dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etComment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/century_gothic"
+                    android:textColorHighlight="@color/white"
+                    android:background="@color/transparent"
+                    android:textColor="@color/button_dark"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="50dp"
+                android:layout_marginEnd="20dp"
+                android:textColor="@color/white"
+                app:backgroundTint="@null"
+                android:fontFamily="@font/century_gothic_bold"
+                android:text="ASSIGN TRIP"
+                android:layout_below="@id/textComments"
+                android:id="@+id/btSubmit"
+                android:background="@drawable/button_bg_curved_blue"/>
+
+        </RelativeLayout>
+
+    </ScrollView>
+</RelativeLayout>

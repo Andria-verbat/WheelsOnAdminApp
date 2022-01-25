@@ -1,0 +1,615 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/home_screen_bg"
+    tools:context=".ui.home.HomeActivity">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hi, User"
+                android:fontFamily="@font/century_gothic"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="40dp"
+                android:textColor="@color/white"
+                android:textSize="32sp"/>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                app:cardCornerRadius="10dp"
+                android:visibility="gone"
+                android:id="@+id/cardMapView"
+                android:layout_below="@id/textUserName"
+                android:layout_margin="20dp"
+                android:elevation="10dp">
+
+                <com.google.android.gms.maps.MapView
+                    android:id="@+id/mapView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:scaleType="centerCrop"
+                    />
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:id="@+id/linearStartEnd"
+                android:layout_marginTop="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:orientation="horizontal"
+                android:layout_below="@id/cardMapView"
+                android:layout_marginEnd="20dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="2dp"
+                    android:visibility="gone"
+                    android:src="@drawable/ic_baseline_location_on_24"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginStart="10dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/textStartLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/button_dark"
+                        android:fontFamily="@font/century_gothic"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="10dp"
+                        android:text="Start Location"
+                        app:drawableStartCompat="@drawable/ic_baseline_location_on_24" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@color/grey"/>
+
+                    <TextView
+                        android:id="@+id/textDropLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/button_dark"
+                        android:fontFamily="@font/century_gothic"
+                        android:textStyle="bold"
+                        android:drawableStart="@drawable/ic_baseline_flag_24"
+                        android:text="Drop Location"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                app:cardCornerRadius="10dp"
+                android:id="@+id/cardContact"
+                app:cardBackgroundColor="@color/white"
+                android:layout_below="@id/linearStartEnd"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:background="@drawable/button_bg_curved_blue_two_side"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:layout_margin="15dp"
+                            android:id="@+id/textTripFromTo"
+                            android:textColor="@color/white"
+                            android:fontFamily="@font/century_gothic_bold"
+                            android:text="Kollam to Ernakulam"/>
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp">
+                        <TextView
+                            android:id="@+id/textTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="13sp"
+                            android:fontFamily="@font/century_gothic_bold"
+                            android:textColor="@color/black"
+                            android:text="Contact Person"/>
+
+                        <TextView
+                            android:id="@+id/textContactName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/textTitle"
+                            android:fontFamily="@font/century_gothic"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            android:text="Ajay Kumar"/>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:id="@+id/verticalView"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_toEndOf="@id/textTitle"
+                            android:background="@color/grey"/>
+
+                        <TextView
+                            android:id="@+id/textNumber"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/verticalView"
+                            android:fontFamily="@font/century_gothic_bold"
+                            android:textColor="@color/black"
+                            android:textSize="13sp"
+                            android:text="Contact Number"/>
+
+                        <TextView
+                            android:id="@+id/textContactNumber"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/textNumber"
+                            android:layout_toEndOf="@id/verticalView"
+                            android:fontFamily="@font/century_gothic"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            android:text="+919847874574,+919876543210"/>
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Total Trip Amount"
+                app:boxStrokeColor="@color/button_dark"
+                android:textColorHint="@color/grey"
+                android:id="@+id/textTotalTrip"
+                android:layout_below="@+id/cardContact"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="20dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHighlight="@color/white"
+                    android:background="@color/transparent"
+                    android:textSize="16sp"
+                    android:enabled="false"
+                    android:id="@+id/etTotalAmount"
+                    android:fontFamily="@font/century_gothic"
+                    android:textColor="@color/button_dark"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Rate Per KM"
+                app:boxStrokeColor="@color/button_dark"
+                android:textColorHint="@color/grey"
+                android:id="@+id/textRatePerKm"
+                android:layout_below="@+id/textTotalTrip"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="20dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHighlight="@color/white"
+                    android:background="@color/transparent"
+                    android:textSize="16sp"
+                    android:enabled="false"
+                    android:id="@+id/etTripRate"
+                    android:fontFamily="@font/century_gothic"
+                    android:textColor="@color/button_dark"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="20dp"
+                android:id="@+id/frameStartKm"
+                android:layout_below="@+id/textRatePerKm">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Starting KM"
+                    app:boxStrokeColor="@color/button_dark"
+                    android:textColorHint="@color/grey"
+                    android:id="@+id/textStartingKm">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColorHighlight="@color/white"
+                        android:background="@color/transparent"
+                        android:textSize="16sp"
+                        android:enabled="false"
+                        android:id="@+id/etStartingKm"
+                        android:fontFamily="@font/century_gothic"
+                        android:textColor="@color/button_dark"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="  Upload Photo  "
+                    android:layout_gravity="center|end"
+                    android:textSize="12sp"
+                    android:clickable="true"
+                    android:visibility="invisible"
+                    android:fontFamily="@font/century_gothic"
+                    android:id="@+id/textCheckStatus"
+                    android:textAlignment="center"
+                    android:paddingBottom="2dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_bg_curved_blue_short"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="20dp"
+                android:id="@+id/frameCloseKm"
+                android:layout_below="@+id/frameStartKm">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Closing KM"
+                    app:boxStrokeColor="@color/button_dark"
+                    android:textColorHint="@color/grey"
+                    android:id="@+id/textCloseKm">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColorHighlight="@color/white"
+                        android:background="@color/transparent"
+                        android:textSize="16sp"
+                        android:enabled="false"
+                        android:id="@+id/etCloseKm"
+                        android:fontFamily="@font/century_gothic"
+                        android:textColor="@color/button_dark"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="  Upload Photo  "
+                    android:layout_gravity="center|end"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/century_gothic"
+                    android:id="@+id/textCloseUpload"
+                    android:textAlignment="center"
+                    android:paddingBottom="2dp"
+                    android:visibility="invisible"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_bg_curved_blue_short"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginEnd="20dp"
+                android:id="@+id/frameFuelAmount"
+                android:visibility="gone"
+                android:layout_below="@+id/frameCloseKm">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Fuel Amount"
+                    app:boxStrokeColor="@color/button_dark"
+                    android:textColorHint="@color/grey"
+                    android:id="@+id/textFuelAmount">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColorHighlight="@color/white"
+                        android:background="@color/transparent"
+                        android:textSize="16sp"
+                        android:enabled="false"
+                        android:id="@+id/etFuelAmount"
+                        android:fontFamily="@font/century_gothic"
+                        android:textColor="@color/button_dark"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Fuel"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_gravity="center|end"
+                    android:textSize="12sp"
+                    android:clickable="true"
+                    android:visibility="invisible"
+                    android:fontFamily="@font/century_gothic"
+                    android:id="@+id/textFuelUpload"
+                    android:textAlignment="center"
+                    android:paddingBottom="2dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_bg_curved_blue_short"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="65dp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/century_gothic"
+                    android:textColor="@color/button_dark"
+                    android:drawablePadding="5dp"
+                    android:visibility="gone"
+                    android:text="Click add button to add fuel expense"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="20dp"
+                android:id="@+id/framePermit"
+                android:visibility="gone"
+                android:layout_below="@+id/frameFuelAmount">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Permit Number"
+                    app:boxStrokeColor="@color/button_dark"
+                    android:textColorHint="@color/grey"
+                    android:id="@+id/textPermit">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColorHighlight="@color/white"
+                        android:background="@color/transparent"
+                        android:textSize="16sp"
+                        android:id="@+id/etPermitNumber"
+                        android:fontFamily="@font/century_gothic"
+                        android:textColor="@color/button_dark"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="  Upload Permit  "
+                    android:layout_gravity="center|end"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/century_gothic"
+                    android:id="@+id/textPermitUpload"
+                    android:textAlignment="center"
+                    android:paddingBottom="2dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_bg_curved_blue_short"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginEnd="20dp"
+                android:id="@+id/frameToll"
+                android:visibility="gone"
+                android:layout_below="@+id/framePermit">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Toll Amount"
+                    app:boxStrokeColor="@color/button_dark"
+                    android:textColorHint="@color/grey"
+                    android:id="@+id/textTollAmount">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColorHighlight="@color/white"
+                        android:background="@color/transparent"
+                        android:textSize="16sp"
+                        android:id="@+id/etTollAmount"
+                        android:enabled="false"
+                        android:fontFamily="@font/century_gothic"
+                        android:textColor="@color/button_dark"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Toll"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_gravity="center|end"
+                    android:textSize="12sp"
+                    android:visibility="invisible"
+                    android:fontFamily="@font/century_gothic"
+                    android:id="@+id/textTollUpload"
+                    android:textAlignment="center"
+                    android:paddingBottom="2dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_bg_curved_blue_short"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="65dp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:fontFamily="@font/century_gothic"
+                    android:textColor="@color/button_dark"
+                    android:drawablePadding="5dp"
+                    android:text="Click add button to add Toll"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginEnd="20dp"
+                android:id="@+id/frameParking"
+                android:visibility="gone"
+                android:layout_below="@+id/frameToll">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Parking Amount"
+                    app:boxStrokeColor="@color/button_dark"
+                    android:textColorHint="@color/grey"
+                    android:id="@+id/textParkingAmount">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColorHighlight="@color/white"
+                        android:background="@color/transparent"
+                        android:textSize="16sp"
+                        android:enabled="false"
+                        android:id="@+id/etParkingAmount"
+                        android:fontFamily="@font/century_gothic"
+                        android:textColor="@color/button_dark"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Parking"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:visibility="invisible"
+                    android:layout_marginBottom="15dp"
+                    android:layout_gravity="center|end"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/century_gothic"
+                    android:id="@+id/textParkUpload"
+                    android:textAlignment="center"
+                    android:paddingBottom="2dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_bg_curved_blue_short"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="65dp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/century_gothic"
+                    android:textColor="@color/button_dark"
+                    android:drawablePadding="5dp"
+                    android:visibility="gone"
+                    android:text="Click add button to add Parking"/>
+            </FrameLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Bata"
+                app:boxStrokeColor="@color/button_dark"
+                android:textColorHint="@color/grey"
+                android:id="@+id/textBata"
+                android:visibility="gone"
+                android:layout_below="@+id/frameParking"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="20dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHighlight="@color/white"
+                    android:background="@color/transparent"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/century_gothic"
+                    android:textColor="@color/button_dark"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="50dp"
+                android:layout_marginEnd="20dp"
+                android:textColor="@color/white"
+                android:layout_below="@id/textBata"
+                app:backgroundTint="@null"
+                android:id="@+id/btCloseTrip"
+                android:fontFamily="@font/century_gothic_bold"
+                android:text="CLOSE"
+                android:background="@drawable/button_bg_curved_blue"/>
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btTrack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        app:fab_size="normal"
+        app:fab_colorNormal="@color/button_dark"
+        app:fab_icon="@drawable/ic_live_tracking"
+        android:layout_marginTop="40dp"/>
+</RelativeLayout>

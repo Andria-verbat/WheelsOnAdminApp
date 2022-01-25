@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/button_bg_curved_blue_less"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:id="@+id/textHeading"
+        android:fontFamily="@font/century_gothic_bold"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"
+        android:text="Logout"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:id="@+id/textLogout"
+        android:layout_below="@id/textHeading"
+        android:fontFamily="@font/century_gothic"
+        android:textSize="16sp"
+        android:textAlignment="center"
+        android:layout_centerHorizontal="true"
+        android:text="Are you sure you want to logout?"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/textLogout"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:backgroundTint="@null"
+            android:textColor="@color/button_dark"
+            android:text="Cancel"
+            android:id="@+id/btCancel"
+            android:layout_margin="10dp"
+            android:background="@drawable/button_bg_curved_less"
+            android:layout_weight="1"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:backgroundTint="@null"
+            android:textColor="@color/button_dark"
+            android:text="Okay"
+            android:id="@+id/btOkay"
+            android:layout_margin="10dp"
+            android:background="@drawable/button_bg_curved_less"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/home_screen_bg"
+    tools:context=".ui.home.vehicle.ListVehicleFragment">
+
+    <TextView
+        android:id="@+id/textDrivers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/century_gothic"
+        android:text="Service"
+        android:textColor="@color/white"
+        android:textSize="32sp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Manage your services"
+        android:fontFamily="@font/century_gothic"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="30dp"
+        android:id="@+id/textManage"
+        android:layout_below="@id/textDrivers"
+        android:textColor="@color/white"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        app:cardBackgroundColor="@color/white"
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        app:cardCornerRadius="10dp"
+        android:layout_below="@id/textManage"
+        android:id="@+id/cardVehicleType"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:layout_margin="10dp"
+                android:paddingStart="10dp"
+                android:fontFamily="@font/century_gothic"
+                android:text="SELECT VEHICLE TYPE"/>
+
+            <com.skydoves.powerspinner.PowerSpinnerView
+                android:id="@+id/spinnerState"
+                android:layout_width="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_height="50dp"
+                android:background="@drawable/spinner_border"
+                android:gravity="center|start"
+                android:text="ALL"
+                android:fontFamily="@font/century_gothic"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="16sp"
+                android:padding="10dp"
+                app:spinner_arrow_animate="true"
+                app:spinner_arrow_gravity="end"
+                app:spinner_arrow_padding="8dp"
+                app:spinner_arrow_show="true"
+                app:spinner_arrow_tint="@color/button_dark"
+                app:spinner_divider_color="@color/blue_dark"
+                app:spinner_divider_show="true"
+                app:spinner_divider_size="0.4dp"
+                app:spinner_popup_animation="bounce"
+                app:spinner_popup_background="@color/white"
+                app:spinner_popup_elevation="14dp" />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/vehiclesRecycler"
+        android:layout_below="@id/cardVehicleType"
+        android:layout_marginBottom="10dp"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/textNoVehicles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:textColor="@color/button_dark"
+        android:layout_centerInParent="true"
+        android:fontFamily="@font/century_gothic_bold"
+        android:text="No Vehicles Added"/>
+
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabService"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fab_colorNormal="@color/blue_dark"
+        app:fab_title="Add Service"
+        app:fab_icon="@drawable/ic_baseline_add_24_white"
+        app:fab_colorPressed="@color/button_dark"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

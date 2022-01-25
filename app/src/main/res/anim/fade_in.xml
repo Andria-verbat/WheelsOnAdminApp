@@ -1,0 +1,10 @@
+<!--
+  ~ Created by Accubits Technologies on 10/8/20 10:36 AM
+  ~ Copyright (c) 2020 . All rights reserved.
+  ~ Last modified 10/8/20 10:34 AM
+  -->
+
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <alpha android:fromAlpha="0.0" android:toAlpha="1.0"
+        android:duration="@android:integer/config_mediumAnimTime" />
+</set>
