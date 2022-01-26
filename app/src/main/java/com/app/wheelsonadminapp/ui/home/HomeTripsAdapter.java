@@ -13,17 +13,18 @@ import com.app.wheelsonadminapp.R;
 import com.app.wheelsonadminapp.model.TripModel;
 import com.app.wheelsonadminapp.model.trip.TripItem;
 import com.app.wheelsonadminapp.model.trip.triplist.TripListItem;
+import com.app.wheelsonadminapp.model.trip.triplist.TripLiveListItem;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
 public class HomeTripsAdapter extends RecyclerView.Adapter<HomeTripsAdapter.TripsViewHolder> {
 
-    List<TripListItem>tripModels;
+    List<TripLiveListItem>tripModels;
     Context context;
     HomeTripClickListener homeTripClickListener;
 
-    public HomeTripsAdapter(List<TripListItem> tripModels, Context context,HomeTripClickListener homeTripClickListener) {
+    public HomeTripsAdapter(List<TripLiveListItem> tripModels, Context context,HomeTripClickListener homeTripClickListener) {
         this.tripModels = tripModels;
         this.context = context;
         this.homeTripClickListener = homeTripClickListener;
@@ -38,7 +39,7 @@ public class HomeTripsAdapter extends RecyclerView.Adapter<HomeTripsAdapter.Trip
 
     @Override
     public void onBindViewHolder(@NonNull TripsViewHolder holder, int position) {
-        TripListItem tripItem = tripModels.get(position);
+        TripLiveListItem tripItem = tripModels.get(position);
         holder.textTripFromTo.setText(tripItem.getFromlocation() +" to "+tripItem.getTolocation());
         holder.textStartDate.setText("Start Date : "+tripItem.getStartdate());
         holder.textEndDate.setText("End Date : "+tripItem.getEnddate());
@@ -83,6 +84,6 @@ public class HomeTripsAdapter extends RecyclerView.Adapter<HomeTripsAdapter.Trip
     }
 
     interface HomeTripClickListener{
-        void OnTripClicked(TripListItem tripItem);
+        void OnTripClicked(TripLiveListItem tripItem);
     }
 }

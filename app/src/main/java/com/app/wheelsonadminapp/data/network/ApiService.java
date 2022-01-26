@@ -16,6 +16,7 @@ import com.app.wheelsonadminapp.model.trip.TripResponse;
 import com.app.wheelsonadminapp.model.trip.trip_details.TripDetailsResponse;
 import com.app.wheelsonadminapp.model.trip.trip_track.TrackResponse;
 import com.app.wheelsonadminapp.model.trip.triplist.TripListResponse;
+import com.app.wheelsonadminapp.model.trip.triplist.TripLiveListResponse;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -161,6 +162,9 @@ public interface ApiService {
 
     @POST("trip_list.php")
     Call<TripListResponse>getTrips(@Body JsonObject inputObject);
+
+    @POST("trip_live_list.php")
+    Call<TripLiveListResponse>getLiveTrips(@Body JsonObject inputObject);
 
     @POST("trip_details.php")
     Call<TripDetailsResponse>getTripDetails(@Body JsonObject inputObject);

@@ -49,6 +49,7 @@ public class VehiclesAdapter extends RecyclerView.Adapter<VehiclesAdapter.Vehicl
         holder.textInsurance.setText("Insurance Till : "+vehicleItem.getInsurancedate());
         holder.textPollution.setText("Pollution Till : "+vehicleItem.getPollutiondate());
         holder.textSeats.setText("Seats : "+vehicleItem.getSeat());
+        holder.textSpeedReading.setText("Speedometer Reading : "+vehicleItem.getStartKm());
         Picasso.get().load(AppConstants.SERVER_URL+imgPath+vehicleItem.getTaximg())
                 .centerCrop().placeholder(R.drawable.app_logo).resize(125,125).into(holder.imgProfile);
         holder.parentCardView.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +73,7 @@ public class VehiclesAdapter extends RecyclerView.Adapter<VehiclesAdapter.Vehicl
 
     class VehicleViewModel  extends RecyclerView.ViewHolder{
 
-        TextView vehicleName,brand,vehicleNo,textInsurance,textPollution,textSeats,textView;
+        TextView vehicleName,brand,vehicleNo,textInsurance,textPollution,textSeats,textView,textSpeedReading;
         MaterialCardView parentCardView;
         ImageView imgProfile;
 
@@ -87,6 +88,7 @@ public class VehiclesAdapter extends RecyclerView.Adapter<VehiclesAdapter.Vehicl
             textView = itemView.findViewById(R.id.textView);
             parentCardView = itemView.findViewById(R.id.parentCardView);
             imgProfile = itemView.findViewById(R.id.imgProfile);
+            textSpeedReading=itemView.findViewById(R.id.textSpeedReading);
         }
     }
 

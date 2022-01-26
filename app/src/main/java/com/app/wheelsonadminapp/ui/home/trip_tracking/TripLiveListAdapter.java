@@ -1,4 +1,4 @@
-package com.app.wheelsonadminapp.ui.home.trips;
+package com.app.wheelsonadminapp.ui.home.trip_tracking;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,73 +10,72 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.wheelsonadminapp.R;
-import com.app.wheelsonadminapp.model.trip.TripItem;
+import com.app.wheelsonadminapp.model.trip.triplist.TripListItem;
+import com.app.wheelsonadminapp.model.trip.triplist.TripLiveListItem;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
-public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.TripViewModel> {
+/**
+ * Created by Andria on 1/26/2022.
+ */
+public class TripLiveListAdapter extends RecyclerView.Adapter<TripLiveListAdapter.TripsViewHolder> {
 
-    List<TripItem>tripItems;
-    Context mContext;
-    TripClickListener tripClickListener;
+    List<TripLiveListItem> tripModels;
+    Context context;
+    HomeTripClickListener homeTripClickListener;
 
-    public TripsAdapter(List<TripItem>tripItems, Context mContext, TripClickListener tripClickListener) {
-        this.tripItems = tripItems;
-        this.mContext = mContext;
-        this.tripClickListener = tripClickListener;
+
+    public TripLiveListAdapter(List<TripLiveListItem> tripModels, Context context,HomeTripClickListener homeTripClickListener) {
+        this.tripModels = tripModels;
+        this.context = context;
+        this.homeTripClickListener=homeTripClickListener;
+
     }
 
     @NonNull
     @Override
-    public TripViewModel onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TripsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.trips_recycler_row, parent, false);
-        return new TripViewModel(view);
+        return new TripsViewHolder(view);
     }
 
+
+
     @Override
-    public void onBindViewHolder(@NonNull TripViewModel holder, int position) {
-        TripItem tripItem = tripItems.get(position);
+    public void onBindViewHolder(@NonNull TripsViewHolder holder, int position) {
+        TripLiveListItem tripItem = tripModels.get(position);
         holder.textTripFromTo.setText(tripItem.getFromlocation() +" to "+tripItem.getTolocation());
         holder.textStartDate.setText("Start Date : "+tripItem.getStartdate());
         holder.textEndDate.setText("End Date : "+tripItem.getEnddate());
-        if(tripItem.getDriverName()!=null){
-            holder.textDriverName.setText("Driver : "+tripItem.getDriverName());
-        }else {
-            holder.textDriverName.setText("Driver : "+"Not Assigned");
-        }
-
-        holder.textVehicleName.setVisibility(View.INVISIBLE);
+        holder.textDriverName.setText("Driver : "+tripItem.getDrivername());
+        holder.textVehicleName.setText("Vehicle : "+tripItem.getVehiclebrand()+" "+tripItem.getVehiclemodel());
         holder.textAmount.setText(tripItem.getAmount());
         holder.parentCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tripClickListener.OnTripClicked(tripItem);
+                homeTripClickListener.OnTripClicked(tripItem);
             }
         });
         holder.textCheckStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tripClickListener.OnTripClicked(tripItem);
+                homeTripClickListener.OnTripClicked(tripItem);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        if(tripItems==null){
-            return 0;
-        }else {
-            return tripItems.size();
-        }
+        return tripModels.size();
     }
 
-    class TripViewModel  extends RecyclerView.ViewHolder{
+    class TripsViewHolder extends RecyclerView.ViewHolder{
 
         TextView textTripFromTo,textStartDate,textEndDate,textDriverName,textVehicleName,textAmount,textCheckStatus;
         MaterialCardView parentCardView;
 
-        public TripViewModel(@NonNull View itemView) {
+        public TripsViewHolder(@NonNull View itemView) {
             super(itemView);
             textTripFromTo = itemView.findViewById(R.id.textTripFromTo);
             textStartDate = itemView.findViewById(R.id.textStartDate);
@@ -89,7 +88,7 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.TripViewMode
         }
     }
 
-    interface TripClickListener{
-        void OnTripClicked(TripItem tripItem);
+    interface HomeTripClickListener{
+        void OnTripClicked(TripLiveListItem tripItem);
     }
 }

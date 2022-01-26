@@ -619,11 +619,14 @@ public class AddVehicleFragment extends Fragment implements View.OnClickListener
             homeActivity.showErrorToast("Please select the vehicle type");
             addVehicleBinding.spinnerType.requestFocus();
         }else if(addVehicleBinding.etVehicleName.getText().length() == 0){
-            homeActivity.showErrorToast("Please enter the vehicle name");
+            homeActivity.showErrorToast("Please enter the brand name");
             addVehicleBinding.etVehicleName.requestFocus();
         }else if(addVehicleBinding.etModelName.getText().length() == 0){
             homeActivity.showErrorToast("Please enter the model name");
             addVehicleBinding.etModelName.requestFocus();
+        }else if(addVehicleBinding.etVehicleNickName.getText().length() == 0){
+            homeActivity.showErrorToast("Please enter the vehicle name");
+            addVehicleBinding.etVehicleNickName.requestFocus();
         }else if(addVehicleBinding.etRegNo.getText().length() == 0){
             homeActivity.showErrorToast("Please enter the registration no");
             addVehicleBinding.etRegNo.requestFocus();

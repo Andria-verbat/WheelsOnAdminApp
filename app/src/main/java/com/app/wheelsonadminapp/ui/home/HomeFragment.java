@@ -22,12 +22,15 @@ import com.app.wheelsonadminapp.model.trip.TripItem;
 import com.app.wheelsonadminapp.model.trip.TripResponse;
 import com.app.wheelsonadminapp.model.trip.triplist.TripListItem;
 import com.app.wheelsonadminapp.model.trip.triplist.TripListResponse;
+import com.app.wheelsonadminapp.model.trip.triplist.TripLiveListItem;
+import com.app.wheelsonadminapp.model.trip.triplist.TripLiveListResponse;
 import com.app.wheelsonadminapp.ui.home.driver.DriverActivity;
 import com.app.wheelsonadminapp.ui.home.driver.DriversFragment;
 import com.app.wheelsonadminapp.ui.home.service.AddServiceFragment;
 import com.app.wheelsonadminapp.ui.home.service.SelectVehicleFragment;
 import com.app.wheelsonadminapp.ui.home.service.ServiceListFragment;
 import com.app.wheelsonadminapp.ui.home.trip_tracking.TripListFragment;
+import com.app.wheelsonadminapp.ui.home.trip_tracking.TripLiveListAdapter;
 import com.app.wheelsonadminapp.ui.home.trips.TripsAdapter;
 import com.app.wheelsonadminapp.ui.home.trips.TripsFragment;
 import com.app.wheelsonadminapp.ui.home.trips.ViewRunTripFragment;
@@ -87,7 +90,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Home
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getTrips();
+        getLiveTrips();
     }
 
 
@@ -123,7 +126,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Home
         return (String) DateFormat.format("yyyy-MM-dd", date);
     }
 
-    private void getTrips(){
+    /*private void getTrips(){
         if(NetworkUtility.isOnline(getActivity())){
             AppRepository appRepository = new AppRepository(getActivity());
             MessageProgressDialog.getInstance().show(getActivity());
@@ -169,10 +172,58 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Home
         homeBinding.tripsRecycler.setLayoutManager(linearLayoutManager);
         HomeTripsAdapter homeTripsAdapter = new HomeTripsAdapter(tripItems,homeActivity,this);
         homeBinding.tripsRecycler.setAdapter(homeTripsAdapter);
+    }*/
+
+
+    private void getLiveTrips(){
+        if(NetworkUtility.isOnline(getActivity())){
+            AppRepository appRepository = new AppRepository(getActivity());
+            MessageProgressDialog.getInstance().show(getActivity());
+            JsonObject inputObject = new JsonObject();
+            inputObject.addProperty("travelsid",appRepository.getUser().getUserId());
+            Call<TripLiveListResponse> tripResponseCall = RetrofitClientInstance.getApiService().getLiveTrips(inputObject);
+            tripResponseCall.enqueue(new Callback<TripLiveListResponse>() {
+                @Override
+                public void onResponse(Call<TripLiveListResponse> call, Response<TripLiveListResponse> response) {
+                    MessageProgressDialog.getInstance().dismiss();
+                    if(response.code() == 200 && response.body()!=null){
+                        if(response.body().getStatus() == 1){
+                            loadLiveRecyclerData(response.body().getTrip());
+                            homeBinding.textNoTrips.setVisibility(View.GONE);
+                            homeBinding.tripsRecycler.setVisibility(View.VISIBLE);
+                        }else {
+                            homeBinding.textNoTrips.setVisibility(View.VISIBLE);
+                            homeBinding.tripsRecycler.setVisibility(View.GONE);
+                        }
+                    }else {
+                        homeActivity.showErrorToast(getString(R.string.something_wrong));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<TripLiveListResponse> call, Throwable t) {
+                    homeActivity.showErrorToast(getString(R.string.something_wrong));
+                    MessageProgressDialog.getInstance().dismiss();
+                }
+            });
+        }else{
+            homeActivity.showErrorToast(getString(R.string.no_internet));
+        }
+    }
+    private void loadLiveRecyclerData(List<TripLiveListItem> tripItems){
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity()) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+        homeBinding.tripsRecycler.setLayoutManager(linearLayoutManager);
+        HomeTripsAdapter homeTripsAdapter = new HomeTripsAdapter(tripItems,homeActivity,this);
+        homeBinding.tripsRecycler.setAdapter(homeTripsAdapter);
     }
 
     @Override
-    public void OnTripClicked(TripListItem tripItem) {
+    public void OnTripClicked(TripLiveListItem tripItem) {
         Bundle bundle = new Bundle();
         bundle.putString(AppConstants.TRIP_ID,tripItem.getId());
         homeActivity.replaceFragment(new ViewRunTripFragment(),true,bundle);

@@ -18,6 +18,8 @@ import com.app.wheelsonadminapp.databinding.FragmentTripListBinding;
 import com.app.wheelsonadminapp.model.trip.trip_details.TripDetailItem;
 import com.app.wheelsonadminapp.model.trip.triplist.TripListItem;
 import com.app.wheelsonadminapp.model.trip.triplist.TripListResponse;
+import com.app.wheelsonadminapp.model.trip.triplist.TripLiveListItem;
+import com.app.wheelsonadminapp.model.trip.triplist.TripLiveListResponse;
 import com.app.wheelsonadminapp.ui.home.HomeActivity;
 import com.app.wheelsonadminapp.ui.home.HomeTrackingFragment;
 import com.app.wheelsonadminapp.ui.home.HomeTripsAdapter;
@@ -36,7 +38,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class TripListFragment extends Fragment implements TripListAdapter.HomeTripClickListener {
+public class TripListFragment extends Fragment implements TripLiveListAdapter.HomeTripClickListener {
 
     FragmentTripListBinding binding;
     HomeActivity homeActivity;
@@ -63,7 +65,8 @@ public class TripListFragment extends Fragment implements TripListAdapter.HomeTr
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getTrips();
+        //getTrips();
+        getLiveTrips();
     }
 
     private void getTrips(){
@@ -79,7 +82,7 @@ public class TripListFragment extends Fragment implements TripListAdapter.HomeTr
                     MessageProgressDialog.getInstance().dismiss();
                     if(response.code() == 200 && response.body()!=null){
                         if(response.body().getStatus() == 1){
-                            loadRecyclerData(response.body().getTrip());
+                           // loadRecyclerData(response.body().getTrip());
                             binding.textNoTrips.setVisibility(View.GONE);
                             binding.tripsRecycler.setVisibility(View.VISIBLE);
                         }else {
@@ -102,7 +105,8 @@ public class TripListFragment extends Fragment implements TripListAdapter.HomeTr
         }
     }
 
-    private void loadRecyclerData(List<TripListItem> tripItems){
+
+    /*private void loadRecyclerData(List<TripListItem> tripItems){
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity()) {
             @Override
             public boolean canScrollVertically() {
@@ -112,10 +116,57 @@ public class TripListFragment extends Fragment implements TripListAdapter.HomeTr
         binding.tripsRecycler.setLayoutManager(linearLayoutManager);
         TripListAdapter tripListAdapter = new TripListAdapter(tripItems,homeActivity,this);
         binding.tripsRecycler.setAdapter(tripListAdapter);
+    }*/
+    private void getLiveTrips(){
+        if(NetworkUtility.isOnline(getActivity())){
+            AppRepository appRepository = new AppRepository(getActivity());
+            MessageProgressDialog.getInstance().show(getActivity());
+            JsonObject inputObject = new JsonObject();
+            inputObject.addProperty("travelsid",appRepository.getUser().getUserId());
+            Call<TripLiveListResponse> tripResponseCall = RetrofitClientInstance.getApiService().getLiveTrips(inputObject);
+            tripResponseCall.enqueue(new Callback<TripLiveListResponse>() {
+                @Override
+                public void onResponse(Call<TripLiveListResponse> call, Response<TripLiveListResponse> response) {
+                    MessageProgressDialog.getInstance().dismiss();
+                    if(response.code() == 200 && response.body()!=null){
+                        if(response.body().getStatus() == 1){
+                            loadLiveRecyclerData(response.body().getTrip());
+                            binding.textNoTrips.setVisibility(View.GONE);
+                            binding.tripsRecycler.setVisibility(View.VISIBLE);
+                        }else {
+                            binding.textNoTrips.setVisibility(View.VISIBLE);
+                            binding.tripsRecycler.setVisibility(View.GONE);
+                        }
+                    }else {
+                        homeActivity.showErrorToast(getString(R.string.something_wrong));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<TripLiveListResponse> call, Throwable t) {
+                    homeActivity.showErrorToast(getString(R.string.something_wrong));
+                    MessageProgressDialog.getInstance().dismiss();
+                }
+            });
+        }else{
+            homeActivity.showErrorToast(getString(R.string.no_internet));
+        }
+    }
+    private void loadLiveRecyclerData(List<TripLiveListItem> tripItems){
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity()) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+        binding.tripsRecycler.setLayoutManager(linearLayoutManager);
+        TripLiveListAdapter tripliveListAdapter = new TripLiveListAdapter(tripItems,homeActivity,this);
+        binding.tripsRecycler.setAdapter(tripliveListAdapter);
     }
 
     @Override
-    public void OnTripClicked(TripListItem tripItem) {
+    public void OnTripClicked(TripLiveListItem tripItem) {
+        System.out.println("Clicked");
         Bundle bundle = new Bundle();
         TripDetailItem tripDetailItem = new TripDetailItem();
         tripDetailItem.setTripid(tripItem.getId());

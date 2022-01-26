@@ -201,6 +201,7 @@ public class TripsFragment extends Fragment implements View.OnClickListener, Tri
                 public void onResponse(Call<TripResponse> call, Response<TripResponse> response) {
                     MessageProgressDialog.getInstance().dismiss();
                     if(response.code() == 200 && response.body()!=null){
+                        System.out.println("print status"+response.body().getStatus());
                         if(response.body().getStatus() == 1){
                             loadTripsToRecycler(response.body().getTrip());
                         }else {

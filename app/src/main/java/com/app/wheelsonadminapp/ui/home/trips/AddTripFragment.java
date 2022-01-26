@@ -159,10 +159,10 @@ public class AddTripFragment extends Fragment implements View.OnClickListener {
         }else if(binding.etToLocation.getText().length() == 0){
             homeActivity.showErrorToast("Please enter the To Location");
             binding.etToLocation.requestFocus();
-        }else if(binding.spinnerDriver.getSelectedItemPosition() == 0){
+        }/*else if(binding.spinnerDriver.getSelectedItemPosition() == 0){
             homeActivity.showErrorToast("Please select a driver");
             binding.spinnerDriver.requestFocus();
-        }else if(binding.spinnerVehicle.getSelectedItemPosition() == 0){
+        }*/else if(binding.spinnerVehicle.getSelectedItemPosition() == 0){
             homeActivity.showErrorToast("Please select a vehicle");
             binding.spinnerVehicle.requestFocus();
         }else if(binding.eTripStartDate.getText().length() == 0){
@@ -183,7 +183,7 @@ public class AddTripFragment extends Fragment implements View.OnClickListener {
         }else if(binding.etPrimaryContactPerson.getText().length() == 0){
             homeActivity.showErrorToast("Please enter the contact name");
             binding.etPrimaryContactPerson.requestFocus();
-        }else if(binding.etPrimaryContactNumber.getText().length() == 0 || binding.etPrimaryContactNumber.getText().length() < 9){
+        }else if(binding.etPrimaryContactNumber.getText().length() == 0 || binding.etPrimaryContactNumber.getText().length() < 10){
             homeActivity.showErrorToast("Please enter the contact number");
             binding.etPrimaryContactNumber.requestFocus();
         }/*else if(binding.etTripAmount.getText().length() == 0){
