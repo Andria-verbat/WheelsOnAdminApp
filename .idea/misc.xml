@@ -3,13 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/wheelson-admin/bijoshmohan-wheelson-admin-64bda5cefa25/WheelsOnAdminApp/app/src/main/res/drawable/background_gradient_splash.xml" value="0.1925925925925926" />
         <entry key="..\:/wheelson-admin/bijoshmohan-wheelson-admin-64bda5cefa25/WheelsOnAdminApp/app/src/main/res/drawable/ic_logo_wheelsowner.xml" value="0.12222222222222222" />
+        <entry key="..\:/wheelson-admin/bijoshmohan-wheelson-admin-64bda5cefa25/WheelsOnAdminApp/app/src/main/res/drawable/ic_newlogo.xml" value="0.1925925925925926" />
         <entry key="..\:/wheelson-admin/bijoshmohan-wheelson-admin-64bda5cefa25/WheelsOnAdminApp/app/src/main/res/drawable/splash_drawable.xml" value="0.1" />
+        <entry key="..\:/wheelson-admin/bijoshmohan-wheelson-admin-64bda5cefa25/WheelsOnAdminApp/app/src/main/res/layout/activity_driver.xml" value="0.16757246376811594" />
         <entry key="..\:/wheelson-admin/bijoshmohan-wheelson-admin-64bda5cefa25/WheelsOnAdminApp/app/src/main/res/layout/activity_home.xml" value="0.1" />
+        <entry key="..\:/wheelson-admin/bijoshmohan-wheelson-admin-64bda5cefa25/WheelsOnAdminApp/app/src/main/res/layout/activity_main.xml" value="0.16757246376811594" />
         <entry key="..\:/wheelson-admin/bijoshmohan-wheelson-admin-64bda5cefa25/WheelsOnAdminApp/app/src/main/res/layout/activity_splash.xml" value="0.1" />
+        <entry key="..\:/wheelson-admin/bijoshmohan-wheelson-admin-64bda5cefa25/WheelsOnAdminApp/app/src/main/res/layout/activity_vehicle.xml" value="0.16757246376811594" />
+        <entry key="..\:/wheelson-admin/bijoshmohan-wheelson-admin-64bda5cefa25/WheelsOnAdminApp/app/src/main/res/layout/fragment_add_driver.xml" value="0.16757246376811594" />
         <entry key="..\:/wheelson-admin/bijoshmohan-wheelson-admin-64bda5cefa25/WheelsOnAdminApp/app/src/main/res/layout/fragment_add_trip.xml" value="0.18070652173913043" />
         <entry key="..\:/wheelson-admin/bijoshmohan-wheelson-admin-64bda5cefa25/WheelsOnAdminApp/app/src/main/res/layout/fragment_add_vehicle.xml" value="0.1" />
         <entry key="..\:/wheelson-admin/bijoshmohan-wheelson-admin-64bda5cefa25/WheelsOnAdminApp/app/src/main/res/layout/fragment_home.xml" value="0.1766304347826087" />
+        <entry key="..\:/wheelson-admin/bijoshmohan-wheelson-admin-64bda5cefa25/WheelsOnAdminApp/app/src/main/res/layout/fragment_list_vehicle.xml" value="0.11510416666666666" />
+        <entry key="..\:/wheelson-admin/bijoshmohan-wheelson-admin-64bda5cefa25/WheelsOnAdminApp/app/src/main/res/layout/fragment_view_run_trip_fragement.xml" value="0.16757246376811594" />
+        <entry key="..\:/wheelson-admin/bijoshmohan-wheelson-admin-64bda5cefa25/WheelsOnAdminApp/app/src/main/res/layout/fragment_view_vehicle_trip.xml" value="0.13333333333333333" />
+        <entry key="..\:/wheelson-admin/bijoshmohan-wheelson-admin-64bda5cefa25/WheelsOnAdminApp/app/src/main/res/layout/trips_recycler_row.xml" value="0.16757246376811594" />
         <entry key="..\:/wheelson-admin/bijoshmohan-wheelson-admin-64bda5cefa25/WheelsOnAdminApp/app/src/main/res/layout/vehicles_recycler_row.xml" value="0.18070652173913043" />
       </map>
     </option>

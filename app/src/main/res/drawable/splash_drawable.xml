@@ -3,9 +3,7 @@
     <!-- The background color, preferably the same as your normal theme -->
     <item android:drawable="@drawable/background_gradient_splash"/>
     <!-- Your product logo - 144dp color version of your app icon -->
-    <item android:gravity="center">
-        <bitmap
-            android:src="@drawable/logo_small"
-            android:gravity="center"/>
-    </item>
+    <item android:drawable="@drawable/ic_newlogo"
+        android:gravity="center"
+        />
 </layer-list>

@@ -36,6 +36,7 @@ import com.app.wheelsonadminapp.util.AppConstants;
 import com.app.wheelsonadminapp.util.MessageProgressDialog;
 import com.app.wheelsonadminapp.util.NetworkUtility;
 import com.app.wheelsonadminapp.util.Utils;
+import com.google.gson.JsonObject;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -101,7 +102,12 @@ public class AddVehicleFragment extends Fragment implements View.OnClickListener
         if(getArguments()!=null && getArguments().getParcelable(AppConstants.VEHICLE)!=null){
             vehicleItem = getArguments().getParcelable(AppConstants.VEHICLE);
             imgPath =  getArguments().getString(AppConstants.IMAGE_PATH);
-            editMode = true;
+            if(vehicleItem.getStatus().equals("1")){
+                editMode = false;
+            }else {
+                editMode = true;
+            }
+
         }
 
         if(getArguments()!=null && getArguments().getParcelableArrayList(AppConstants.VEHICLE_TYPE_LIST)!=null){
@@ -262,8 +268,14 @@ public class AddVehicleFragment extends Fragment implements View.OnClickListener
             addVehicleBinding.btSubmit.setText("UPDATE INFO");
             addVehicleBinding.textManage.setText("Edit vehicle details");
         }else {
-            addVehicleBinding.btSubmit.setText("SUBMIT INFO");
-            addVehicleBinding.textManage.setText("Add new vehicle");
+            if(vehicleItem.getStatus().equals("1")){
+                addVehicleBinding.btSubmit.setText("INACTIVE");
+                addVehicleBinding.textManage.setText("Delete vehicle");
+            }else {
+                addVehicleBinding.btSubmit.setText("SUBMIT INFO");
+                addVehicleBinding.textManage.setText("Add new vehicle");
+            }
+
         }
 
     }
@@ -462,8 +474,13 @@ public class AddVehicleFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btSubmit:
-                addVehicleBinding.spinnerType.dismiss();
-                submitData();
+                if(addVehicleBinding.btSubmit.getText().equals("INACTIVE")){
+                    deleteVehicle(vehicleItem.getId());
+                }else {
+                    addVehicleBinding.spinnerType.dismiss();
+                    submitData();
+                }
+
                 break;
             case R.id.imgProfile:
                 mode = 1;
@@ -497,6 +514,35 @@ public class AddVehicleFragment extends Fragment implements View.OnClickListener
             case R.id.parentLayout:
                 addVehicleBinding.spinnerType.dismiss();
                 break;
+        }
+    }
+
+    private void deleteVehicle(String status) {
+        if(NetworkUtility.isOnline(getActivity())) {
+            JsonObject inputObject = new JsonObject();
+            inputObject.addProperty("vehicleid",status);
+
+            MessageProgressDialog.getInstance().show(getActivity());
+            Call<JsonObject>deleteApiCall = RetrofitClientInstance.getApiService().deleteVehicle(inputObject);
+            deleteApiCall.enqueue(new Callback<JsonObject>() {
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                    MessageProgressDialog.getInstance().dismiss();
+                    if(response.code() == 200 && response.body()!=null && response.body().has("status")){
+                        int status = response.body().get("status").getAsInt();
+                        if(status == 1){
+                            homeActivity.onBackPressed();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
+                    MessageProgressDialog.getInstance().dismiss();
+                }
+            });
+        }else {
+            homeActivity.showErrorToast(getString(R.string.no_internet));
         }
     }
 

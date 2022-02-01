@@ -210,4 +210,7 @@ public interface ApiService {
 
     @POST("trip_expense_update.php")
     Call<JsonObject> updateExpense(@Body RequestBody file);
+
+    @POST("vehicle_delete.php")
+    Call<JsonObject> deleteVehicle(@Body JsonObject inputObject);
 }

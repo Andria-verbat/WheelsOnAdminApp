@@ -33,15 +33,15 @@
         app:fab_title="Add Vehicle Type" />
 
     <TextView
+        android:id="@+id/textManage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add new vehicle"
-        android:fontFamily="@font/century_gothic"
         android:layout_marginStart="20dp"
         android:layout_marginBottom="30dp"
-        android:id="@+id/textManage"
-        android:layout_below="@id/textDrivers"
-        android:textColor="@color/white"/>
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/century_gothic"
+        android:text="Add new vehicle"
+        android:textColor="@color/white" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -56,6 +56,7 @@
                 android:id="@+id/frameImage"
                 android:layout_width="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="10dp"
                 android:layout_centerHorizontal="true"
                 android:layout_height="wrap_content">
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -78,32 +79,32 @@
             </FrameLayout>
 
             <com.skydoves.powerspinner.PowerSpinnerView
+                android:id="@+id/spinnerType"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_below="@id/frameImage"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
-                android:id="@+id/spinnerType"
                 android:background="@drawable/spinner_border"
-                android:text="Select Type"
                 android:fontFamily="@font/century_gothic"
                 android:gravity="center|start"
                 android:paddingStart="15dp"
+                android:text="Select Type"
                 android:textColor="@color/button_dark"
                 android:textColorHint="@color/black"
                 android:textSize="16sp"
                 app:spinner_arrow_animate="true"
-                app:spinner_arrow_show="true"
-                app:spinner_arrow_tint="@color/button_dark"
                 app:spinner_arrow_gravity="end"
                 app:spinner_arrow_padding="8dp"
+                app:spinner_arrow_show="true"
+                app:spinner_arrow_tint="@color/button_dark"
                 app:spinner_divider_color="@color/blue_dark"
                 app:spinner_divider_show="true"
                 app:spinner_divider_size="0.4dp"
                 app:spinner_popup_animation="dropdown"
                 app:spinner_popup_background="@color/white"
-                app:spinner_popup_elevation="14dp"
-                android:layout_below="@id/frameImage"/>
+                app:spinner_popup_elevation="14dp" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"

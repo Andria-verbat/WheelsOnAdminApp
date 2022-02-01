@@ -58,6 +58,17 @@ public class VehicleItem implements Parcelable {
 	@SerializedName("vehiclename")
 	private String vehicleNickName;
 
+	@SerializedName("status")
+	private String status;
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public void setVehicletype(String vehicletype){
 		this.vehicletype = vehicletype;
 	}
@@ -211,8 +222,9 @@ public class VehicleItem implements Parcelable {
 			",travelsid = '" + travelsid + '\'' + 
 			",model = '" + model + '\'' + 
 			",id = '" + id + '\'' + 
-			",brand = '" + brand + '\'' + 
-			"}";
+			",brand = '" + brand + '\'' +
+					",status = '" + status + '\'' +
+					"}";
 		}
 
 	@Override
@@ -237,6 +249,7 @@ public class VehicleItem implements Parcelable {
 		dest.writeString(this.model);
 		dest.writeString(this.id);
 		dest.writeString(this.brand);
+		dest.writeString(this.status);
 	}
 
 	public void readFromParcel(Parcel source) {
@@ -255,6 +268,7 @@ public class VehicleItem implements Parcelable {
 		this.model = source.readString();
 		this.id = source.readString();
 		this.brand = source.readString();
+		this.status=source.readString();
 	}
 
 	public VehicleItem() {
@@ -276,6 +290,7 @@ public class VehicleItem implements Parcelable {
 		this.model = in.readString();
 		this.id = in.readString();
 		this.brand = in.readString();
+		this.status=in.readString();
 	}
 
 	public static final Parcelable.Creator<VehicleItem> CREATOR = new Parcelable.Creator<VehicleItem>() {

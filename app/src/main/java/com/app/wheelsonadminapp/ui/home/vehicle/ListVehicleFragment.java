@@ -312,6 +312,7 @@ public class ListVehicleFragment extends Fragment implements View.OnClickListene
         if(fromManageTrips){
             bundle.putString("VEHICLE_ID",vehicleItem.getId());
             bundle.putString("VEHICLE_NAME",vehicleItem.getBrand()+" "+vehicleItem.getModel());
+            bundle.putString("VEHICLE STATUS",vehicleItem.getStatus());
             homeActivity.replaceFragment(new ViewVehicleTripFragment(),true,bundle);
         }else {
             bundle.putParcelable(AppConstants.VEHICLE,vehicleItem);

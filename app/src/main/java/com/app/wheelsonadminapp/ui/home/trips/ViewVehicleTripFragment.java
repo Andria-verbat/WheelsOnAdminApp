@@ -38,7 +38,7 @@ public class ViewVehicleTripFragment extends Fragment {
     FragmentViewVehicleTripBinding binding;
     String vehicleId;
     HomeActivity homeActivity;
-    String vehicleName;
+    String vehicleName,vehicleStatus;
     boolean fromExpense = false;
 
     @Override
@@ -48,7 +48,8 @@ public class ViewVehicleTripFragment extends Fragment {
         if(getArguments()!=null && getArguments().getString("VEHICLE_ID")!=null){
             vehicleId = getArguments().getString("VEHICLE_ID");
             vehicleName = getArguments().getString("VEHICLE_NAME");
-            Log.i("ViewVehicleTripFragment", "onCreate: "+vehicleId);
+            vehicleStatus=getArguments().getString("VEHICLE STATUS");
+            Log.i("ViewVehicleTripFragment", "onCreate: "+vehicleId+" "+vehicleStatus);
         }
 
         if(getArguments()!=null && getArguments().getBoolean("FROM_EXPENSE")){

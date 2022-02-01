@@ -24,7 +24,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                gotoHomeOrLogin();
             }
-        }, 1000);
+        }, 10000);
     }
 
     private void gotoHomeOrLogin(){
