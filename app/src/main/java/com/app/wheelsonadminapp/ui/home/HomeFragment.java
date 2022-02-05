@@ -24,6 +24,7 @@ import com.app.wheelsonadminapp.model.trip.triplist.TripListItem;
 import com.app.wheelsonadminapp.model.trip.triplist.TripListResponse;
 import com.app.wheelsonadminapp.model.trip.triplist.TripLiveListItem;
 import com.app.wheelsonadminapp.model.trip.triplist.TripLiveListResponse;
+import com.app.wheelsonadminapp.ui.home.closed_trips.ClosedTripFragment;
 import com.app.wheelsonadminapp.ui.home.driver.DriverActivity;
 import com.app.wheelsonadminapp.ui.home.driver.DriversFragment;
 import com.app.wheelsonadminapp.ui.home.service.AddServiceFragment;
@@ -74,6 +75,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Home
        homeBinding.linearTrack.setOnClickListener(this);
        homeBinding.linearService.setOnClickListener(this);
        homeBinding.linearExpense.setOnClickListener(this);
+       homeBinding.llClosedTrips.setOnClickListener(this);
        appRepository = new AppRepository(getActivity());
        if(appRepository.getUser()!=null){
            homeBinding.textUserName.setText("Hi, "+appRepository.getUser().getTravelsName());
@@ -106,7 +108,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Home
             case R.id.linearTrips:
                 Bundle bundle = new Bundle();
                 bundle.putBoolean("FROM_MANAGE_TRIP",true);
-                homeActivity.replaceFragment(new ListVehicleFragment(),true,bundle);
+                homeActivity.replaceFragment(new TripsFragment(),true,bundle);
                 break;
             case R.id.linearTrack:
                 homeActivity.replaceFragment(new TripListFragment(),true,null);
@@ -118,6 +120,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Home
                 break;
             case R.id.linearExpense:
                 homeActivity.replaceFragment(new SelectVehicleFragment(),true,null);
+                break;
+            case R.id.llClosedTrips:
+                homeActivity.replaceFragment(new ClosedTripFragment(),true,null);
+
                 break;
         }
     }

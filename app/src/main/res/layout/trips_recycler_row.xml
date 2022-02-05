@@ -106,7 +106,7 @@
             <TextView
                 android:layout_width="110dp"
                 android:layout_height="wrap_content"
-                android:text="Check Status"
+                android:text="View Details"
                 android:fontFamily="@font/century_gothic"
                 android:id="@+id/textCheckStatus"
                 android:textAlignment="center"

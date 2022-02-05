@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.wheelsonadminapp.R;
-import com.app.wheelsonadminapp.model.VehicleModel;
 import com.app.wheelsonadminapp.model.auth.vehicle.VehicleItem;
 import com.app.wheelsonadminapp.util.AppConstants;
 import com.google.android.material.card.MaterialCardView;
@@ -25,12 +24,14 @@ public class VehiclesAdapter extends RecyclerView.Adapter<VehiclesAdapter.Vehicl
     Context mContext;
     VehicleClickListener vehicleClickListener;
     String imgPath;
+    boolean fromManageTrips;
 
-    public VehiclesAdapter(List<VehicleItem> vehicleModels, Context mContext,String imgPath,VehicleClickListener vehicleClickListener) {
+    public VehiclesAdapter(List<VehicleItem> vehicleModels, Context mContext, String imgPath, VehicleClickListener vehicleClickListener, boolean fromManageTrips) {
         this.vehicleModels = vehicleModels;
         this.mContext = mContext;
         this.vehicleClickListener = vehicleClickListener;
         this.imgPath = imgPath;
+        this.fromManageTrips=fromManageTrips;
     }
 
     @NonNull
@@ -50,12 +51,29 @@ public class VehiclesAdapter extends RecyclerView.Adapter<VehiclesAdapter.Vehicl
         holder.textPollution.setText("Pollution Till : "+vehicleItem.getPollutiondate());
         holder.textSeats.setText("Seats : "+vehicleItem.getSeat());
         holder.textSpeedReading.setText("Speedometer Reading : "+vehicleItem.getStartKm());
+        if(!fromManageTrips){
+            if(vehicleItem.getStatus().equals("1")){
+                holder.textViewInactive.setVisibility(View.VISIBLE);
+            }else {
+                holder.textViewInactive.setVisibility(View.GONE);
+            }
+        }else {
+            holder.textViewInactive.setVisibility(View.GONE);
+        }
+
         Picasso.get().load(AppConstants.SERVER_URL+imgPath+vehicleItem.getTaximg())
                 .centerCrop().placeholder(R.drawable.app_logo).resize(125,125).into(holder.imgProfile);
-        holder.parentCardView.setOnClickListener(new View.OnClickListener() {
+        /*holder.parentCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 vehicleClickListener.onVehicleClicked(vehicleItem,imgPath);
+            }
+        });*/
+
+        holder.textViewInactive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                vehicleClickListener.onInActiveClicked(vehicleItem);
             }
         });
         holder.textView.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +91,7 @@ public class VehiclesAdapter extends RecyclerView.Adapter<VehiclesAdapter.Vehicl
 
     class VehicleViewModel  extends RecyclerView.ViewHolder{
 
-        TextView vehicleName,brand,vehicleNo,textInsurance,textPollution,textSeats,textView,textSpeedReading;
+        TextView vehicleName,brand,vehicleNo,textInsurance,textPollution,textSeats,textView,textSpeedReading,textViewInactive;
         MaterialCardView parentCardView;
         ImageView imgProfile;
 
@@ -89,10 +107,12 @@ public class VehiclesAdapter extends RecyclerView.Adapter<VehiclesAdapter.Vehicl
             parentCardView = itemView.findViewById(R.id.parentCardView);
             imgProfile = itemView.findViewById(R.id.imgProfile);
             textSpeedReading=itemView.findViewById(R.id.textSpeedReading);
+            textViewInactive=itemView.findViewById(R.id.textViewInactive);
         }
     }
 
     public interface VehicleClickListener{
         void onVehicleClicked(VehicleItem vehicleItem,String imgPath);
+        void onInActiveClicked(VehicleItem vehicleItem);
     }
 }

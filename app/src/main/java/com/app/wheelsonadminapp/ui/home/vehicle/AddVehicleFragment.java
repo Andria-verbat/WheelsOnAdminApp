@@ -102,11 +102,11 @@ public class AddVehicleFragment extends Fragment implements View.OnClickListener
         if(getArguments()!=null && getArguments().getParcelable(AppConstants.VEHICLE)!=null){
             vehicleItem = getArguments().getParcelable(AppConstants.VEHICLE);
             imgPath =  getArguments().getString(AppConstants.IMAGE_PATH);
-            if(vehicleItem.getStatus().equals("1")){
+           /* if(vehicleItem.getStatus().equals("1")){
                 editMode = false;
-            }else {
+            }else {*/
                 editMode = true;
-            }
+           // }
 
         }
 
@@ -268,13 +268,13 @@ public class AddVehicleFragment extends Fragment implements View.OnClickListener
             addVehicleBinding.btSubmit.setText("UPDATE INFO");
             addVehicleBinding.textManage.setText("Edit vehicle details");
         }else {
-            if(vehicleItem.getStatus().equals("1")){
+           /* if(vehicleItem.getStatus().equals("1")){
                 addVehicleBinding.btSubmit.setText("INACTIVE");
                 addVehicleBinding.textManage.setText("Delete vehicle");
-            }else {
+            }else {*/
                 addVehicleBinding.btSubmit.setText("SUBMIT INFO");
                 addVehicleBinding.textManage.setText("Add new vehicle");
-            }
+           // }
 
         }
 
@@ -474,12 +474,12 @@ public class AddVehicleFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btSubmit:
-                if(addVehicleBinding.btSubmit.getText().equals("INACTIVE")){
+               /* if(addVehicleBinding.btSubmit.getText().equals("INACTIVE")){
                     deleteVehicle(vehicleItem.getId());
-                }else {
+                }else {*/
                     addVehicleBinding.spinnerType.dismiss();
                     submitData();
-                }
+              //  }
 
                 break;
             case R.id.imgProfile:
@@ -517,34 +517,7 @@ public class AddVehicleFragment extends Fragment implements View.OnClickListener
         }
     }
 
-    private void deleteVehicle(String status) {
-        if(NetworkUtility.isOnline(getActivity())) {
-            JsonObject inputObject = new JsonObject();
-            inputObject.addProperty("vehicleid",status);
 
-            MessageProgressDialog.getInstance().show(getActivity());
-            Call<JsonObject>deleteApiCall = RetrofitClientInstance.getApiService().deleteVehicle(inputObject);
-            deleteApiCall.enqueue(new Callback<JsonObject>() {
-                @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                    MessageProgressDialog.getInstance().dismiss();
-                    if(response.code() == 200 && response.body()!=null && response.body().has("status")){
-                        int status = response.body().get("status").getAsInt();
-                        if(status == 1){
-                            homeActivity.onBackPressed();
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<JsonObject> call, Throwable t) {
-                    MessageProgressDialog.getInstance().dismiss();
-                }
-            });
-        }else {
-            homeActivity.showErrorToast(getString(R.string.no_internet));
-        }
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

@@ -26,9 +26,13 @@ import com.app.wheelsonadminapp.model.auth.vehicle.VehicleItem;
 import com.app.wheelsonadminapp.model.auth.vehicle.VehicleListResponse;
 import com.app.wheelsonadminapp.model.driver.DriverItem;
 import com.app.wheelsonadminapp.model.driver.DriverResponse;
+import com.app.wheelsonadminapp.model.trip.PaymentStatusItem;
+import com.app.wheelsonadminapp.model.trip.PaymentStatusResponse;
 import com.app.wheelsonadminapp.model.trip.TripResponse;
+import com.app.wheelsonadminapp.model.trip.trip_details.TripDetailsResponse;
 import com.app.wheelsonadminapp.ui.home.HomeActivity;
 import com.app.wheelsonadminapp.ui.home.vehicle.VehicleActivity;
+import com.app.wheelsonadminapp.util.AppConstants;
 import com.app.wheelsonadminapp.util.MessageProgressDialog;
 import com.app.wheelsonadminapp.util.NetworkUtility;
 import com.google.android.gms.common.api.Status;
@@ -73,7 +77,11 @@ public class AddTripFragment extends Fragment implements View.OnClickListener {
     ArrayList<DriverItem> algorithmItems;
     SpinnerDriverAdapter adapter;
     SpinnerVehicleAdapter vehicleAdapter;
+    SpinnerPayAdapter spinnerPayAdapter;
     BaseActivity homeActivity;
+    String tripId;
+    TripDetailsResponse tripDetailsResponse;
+    private String selectedPaystatus;
 
 
     @Override
@@ -83,6 +91,10 @@ public class AddTripFragment extends Fragment implements View.OnClickListener {
             homeActivity = (VehicleActivity)getActivity();
         }else {
             homeActivity = (HomeActivity)getActivity();
+        }
+
+        if(getArguments()!=null && getArguments().getString(AppConstants.TRIP_ID)!=null){
+            tripId = getArguments().getString(AppConstants.TRIP_ID);
         }
     }
 
@@ -95,6 +107,16 @@ public class AddTripFragment extends Fragment implements View.OnClickListener {
 
         // Create a new PlacesClient instance
         PlacesClient placesClient = Places.createClient(getActivity());
+
+        if(!tripId.equals("")){
+            binding.textManage.setText("Update your trip");
+            binding.btSubmit.setText("UPDATE TRIP");
+            getTripDetails(tripId);
+
+        }else {
+            binding.textManage.setText("Create your trip");
+            binding.btSubmit.setText("ASSIGN TRIP");
+        }
 
         binding.etFromLocation.setOnClickListener(this);
         binding.etToLocation.setOnClickListener(this);
@@ -186,14 +208,19 @@ public class AddTripFragment extends Fragment implements View.OnClickListener {
         }else if(binding.etPrimaryContactNumber.getText().length() == 0 || binding.etPrimaryContactNumber.getText().length() < 10){
             homeActivity.showErrorToast("Please enter the contact number");
             binding.etPrimaryContactNumber.requestFocus();
-        }/*else if(binding.etTripAmount.getText().length() == 0){
-            homeActivity.showErrorToast("Please enter the trip amount");
+        }else if(binding.spinnerPayStatus.getSelectedItemPosition() == 0){
+            homeActivity.showErrorToast("Please select the payment status");
             binding.etTripAmount.requestFocus();
-        }else if(binding.etRateKm.getText().length() == 0){
+        }/*else if(binding.etRateKm.getText().length() == 0){
             homeActivity.showErrorToast("Please enter the trip rate per km");
             binding.etRateKm.requestFocus();
         }*/else {
-            callAddTripAPI();
+            if(binding.btSubmit.getText().equals("UPDATE TRIP")){
+                callUpdateTripAPI();
+            }else if(binding.btSubmit.getText().equals("ASSIGN TRIP")){
+                callAddTripAPI();
+            }
+
         }
     }
 
@@ -211,6 +238,7 @@ public class AddTripFragment extends Fragment implements View.OnClickListener {
             tripObject.addProperty("tolon",String.valueOf(toLong));
             tripObject.addProperty("driverid",String.valueOf(selectedDriverId));
             tripObject.addProperty("vehicleid",String.valueOf(selectedVehicleId));
+            tripObject.addProperty("paystatus",selectedPaystatus);
             tripObject.addProperty("startdate",binding.eTripStartDate.getText().toString());
             tripObject.addProperty("enddate",binding.etTripEndDate.getText().toString());
             tripObject.addProperty("pickuptime",binding.etPickUpTime.getText().toString());
@@ -257,6 +285,124 @@ public class AddTripFragment extends Fragment implements View.OnClickListener {
         }else {
             homeActivity.showErrorToast(getString(R.string.no_internet));
         }
+    }
+    private void callUpdateTripAPI(){
+        if(NetworkUtility.isOnline(getActivity())){
+            AppRepository appRepository = new AppRepository(getActivity());
+            MessageProgressDialog.getInstance().show(getActivity());
+            JsonObject tripObject = new JsonObject();
+            tripObject.addProperty("travelsid",appRepository.getUser().getUserId());
+            tripObject.addProperty("fromlocation",binding.etFromLocation.getText().toString());
+            tripObject.addProperty("fromlat",String.valueOf(fromLat));
+            tripObject.addProperty("fromlon",String.valueOf(fromLong));
+            tripObject.addProperty("tolocation",binding.etToLocation.getText().toString());
+            tripObject.addProperty("tolat",String.valueOf(toLat));
+            tripObject.addProperty("tolon",String.valueOf(toLong));
+            tripObject.addProperty("driverid",String.valueOf(selectedDriverId));
+            tripObject.addProperty("vehicleid",String.valueOf(selectedVehicleId));
+            tripObject.addProperty("paystatus",selectedPaystatus);
+            tripObject.addProperty("startdate",binding.eTripStartDate.getText().toString());
+            tripObject.addProperty("enddate",binding.etTripEndDate.getText().toString());
+            tripObject.addProperty("pickuptime",binding.etPickUpTime.getText().toString());
+            tripObject.addProperty("pickaddress",binding.etPickUpAddress.getText().toString());
+            tripObject.addProperty("dropaddress",binding.etDropAddress.getText().toString());
+            tripObject.addProperty("person",binding.etPrimaryContactPerson.getText().toString());
+            tripObject.addProperty("mobile1",binding.etPrimaryContactNumber.getText().toString());
+            tripObject.addProperty("mobile2",binding.etSecondaryContactNumber.getText().toString());
+            if(binding.etTripAmount.getText().length() == 0){
+                tripObject.addProperty("amount","");
+            }else {
+                tripObject.addProperty("amount",binding.etTripAmount.getText().toString());
+            }
+            if(binding.etRateKm.getText().length() == 0){
+                tripObject.addProperty("kmrate","");
+            }else {
+                tripObject.addProperty("kmrate",binding.etRateKm.getText().toString());
+            }
+            tripObject.addProperty("comments",binding.etComment.getText().toString());
+            Call<TripResponse>tripResponseCall = RetrofitClientInstance.getApiService().updateTrip(tripObject);
+            tripResponseCall.enqueue(new Callback<TripResponse>() {
+                @Override
+                public void onResponse(Call<TripResponse> call, Response<TripResponse> response) {
+                    MessageProgressDialog.getInstance().dismiss();
+                    if(response.code() == 200 && response.body()!=null){
+                        if(response.body().getStatus() == 1){
+                            homeActivity.showSuccessToast("Trip updated successfully!");
+                            homeActivity.onBackPressed();
+                        }else {
+                            homeActivity.showErrorToast(getString(R.string.something_wrong));
+                        }
+                    }else {
+                        homeActivity.showErrorToast(getString(R.string.something_wrong));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<TripResponse> call, Throwable t) {
+                    homeActivity.showErrorToast(getString(R.string.something_wrong));
+                    MessageProgressDialog.getInstance().dismiss();
+                }
+            });
+
+        }else {
+            homeActivity.showErrorToast(getString(R.string.no_internet));
+        }
+    }
+    private void getTripDetails(String tripId){
+        if(NetworkUtility.isOnline(homeActivity)){
+            JsonObject inputObject = new JsonObject();
+            inputObject.addProperty("tripid",tripId);
+            MessageProgressDialog.getInstance().show(homeActivity);
+            Call<TripDetailsResponse>responseCall = RetrofitClientInstance.getApiService().getTripDetails(inputObject);
+            responseCall.enqueue(new Callback<TripDetailsResponse>() {
+                @Override
+                public void onResponse(Call<TripDetailsResponse> call, Response<TripDetailsResponse> response) {
+                    MessageProgressDialog.getInstance().dismiss();
+                    if(response.code() == 200 && response.body()!=null){
+                        if(response.body().getStatus() == 1){
+                            tripDetailsResponse = response.body();
+                            loadData(tripDetailsResponse);
+                        }else {
+                            homeActivity.showErrorToast(getString(R.string.something_wrong));
+                            requireActivity().onBackPressed();
+                        }
+                    }else {
+                        homeActivity.showErrorToast(getString(R.string.something_wrong));
+                        requireActivity().onBackPressed();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<TripDetailsResponse> call, Throwable t) {
+                    homeActivity.showErrorToast(getString(R.string.something_wrong));
+                    MessageProgressDialog.getInstance().dismiss();
+                }
+            });
+        }else {
+            homeActivity.showErrorToast(getString(R.string.no_internet));
+        }
+    }
+
+    private void loadData(TripDetailsResponse tripDetailsResponse) {
+        binding.etFromLocation.setText(tripDetailsResponse.getTrip().get(0).getFromlocation());
+        binding.etToLocation.setText(tripDetailsResponse.getTrip().get(0).getTolocation());
+        binding.eTripStartDate.setText(tripDetailsResponse.getTrip().get(0).getStartdate());
+        binding.etTripEndDate.setText(tripDetailsResponse.getTrip().get(0).getEnddate());
+        binding.etPickUpTime.setText(tripDetailsResponse.getTrip().get(0).getPickuptime());
+        binding.etPickUpAddress.setText(tripDetailsResponse.getTrip().get(0).getPickaddress());
+        binding.etDropAddress.setText(tripDetailsResponse.getTrip().get(0).getDropaddress());
+        binding.etPrimaryContactPerson.setText(tripDetailsResponse.getTrip().get(0).getPerson());
+
+        binding.etPrimaryContactNumber.setText(tripDetailsResponse.getTrip().get(0).getMobile1());
+        if(tripDetailsResponse.getTrip().get(0).getMobile2()!=null){
+            binding.etSecondaryContactNumber.setText(tripDetailsResponse.getTrip().get(0).getMobile2());
+        }
+        binding.etTripAmount.setText(tripDetailsResponse.getTrip().get(0).getAmount());
+        binding.etRateKm.setText(tripDetailsResponse.getTrip().get(0).getKmrate());
+        binding.etComment.setText(tripDetailsResponse.getTrip().get(0).getComments());
+       // binding.spinnerPayStatus.set
+
+
     }
 
     @Override
@@ -378,6 +524,8 @@ public class AddTripFragment extends Fragment implements View.OnClickListener {
 
                                 }
                             });
+
+                            getPayStatus();
                         }
                     }else {
                         homeActivity.showErrorToast(getString(R.string.something_wrong));
@@ -386,6 +534,59 @@ public class AddTripFragment extends Fragment implements View.OnClickListener {
 
                 @Override
                 public void onFailure(Call<VehicleListResponse> call, Throwable t) {
+                    homeActivity.showErrorToast(getString(R.string.something_wrong));
+                }
+            });
+        }else {
+            homeActivity.showErrorToast(getString(R.string.no_internet));
+        }
+    }
+
+    private void getPayStatus() {
+        if(NetworkUtility.isOnline(binding.getRoot().getContext())){
+            AppRepository appRepository = new AppRepository(getActivity());
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("travelsid",appRepository.getUser().getUserId());
+            Call<PaymentStatusResponse>listResponseCall = RetrofitClientInstance.getApiService().getPaymentStatus();
+            listResponseCall.enqueue(new Callback<PaymentStatusResponse>() {
+                @Override
+                public void onResponse(Call<PaymentStatusResponse> call, Response<PaymentStatusResponse> response) {
+                    if(response.code() == 200 && response.body()!=null){
+                        if(response.body().getStatus() == 1){
+                            System.out.println("sucessssss");
+                            PaymentStatusItem paymentStatusItem=new PaymentStatusItem();
+                            paymentStatusItem.setPayname("Select Payment Status");
+                            paymentStatusItem.setPayid("");
+                            ArrayList<PaymentStatusItem> arrayList= (ArrayList<PaymentStatusItem>) response.body().getPaystatus();
+                            arrayList.add(0,paymentStatusItem);
+                            spinnerPayAdapter = new SpinnerPayAdapter(getActivity(), arrayList);
+                            binding.spinnerPayStatus.setAdapter(spinnerPayAdapter);
+                            binding.spinnerPayStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                    if(position == 0){
+                                        selectedPaystatus = "0";
+                                    }else {
+                                        PaymentStatusItem clickedItem = (PaymentStatusItem) parent.getItemAtPosition(position);
+                                        selectedPaystatus = clickedItem.getPayid();
+                                    }
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
+
+                                }
+                            });
+
+
+                        }
+                    }else {
+                        homeActivity.showErrorToast(getString(R.string.something_wrong));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<PaymentStatusResponse> call, Throwable t) {
                     homeActivity.showErrorToast(getString(R.string.something_wrong));
                 }
             });

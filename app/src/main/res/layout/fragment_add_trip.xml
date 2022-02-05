@@ -18,16 +18,17 @@
         android:layout_marginTop="20dp"
         android:textColor="@color/white"/>
 
+
     <TextView
+        android:id="@+id/textManage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create your trip"
-        android:fontFamily="@font/century_gothic"
+        android:layout_below="@id/textDrivers"
         android:layout_marginStart="20dp"
         android:layout_marginBottom="80dp"
-        android:id="@+id/textManage"
-        android:layout_below="@id/textDrivers"
-        android:textColor="@color/white"/>
+        android:fontFamily="@font/century_gothic"
+        android:text="Create your trip"
+        android:textColor="@color/white" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -374,7 +375,7 @@
                 android:id="@+id/textComments"
                 android:layout_below="@+id/textRateKm"
                 android:layout_marginStart="20dp"
-                android:layout_marginBottom="50dp"
+
                 android:layout_marginEnd="20dp">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -387,7 +388,30 @@
                     android:textColor="@color/button_dark"/>
 
             </com.google.android.material.textfield.TextInputLayout>
+            <FrameLayout
+                android:id="@+id/framepstatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textComments"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="50dp"
+                android:background="@drawable/spinner_border">
 
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spinnerPayStatus"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|center"
+                    android:src="@drawable/ic_baseline_arrow_drop_down_24"
+                    app:tint="@color/blue_dark" />
+            </FrameLayout>
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -398,7 +422,7 @@
                 app:backgroundTint="@null"
                 android:fontFamily="@font/century_gothic_bold"
                 android:text="ASSIGN TRIP"
-                android:layout_below="@id/textComments"
+                android:layout_below="@id/framepstatus"
                 android:id="@+id/btSubmit"
                 android:background="@drawable/button_bg_curved_blue"/>
 

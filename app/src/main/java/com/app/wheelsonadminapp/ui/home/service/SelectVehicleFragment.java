@@ -20,7 +20,6 @@ import com.app.wheelsonadminapp.model.auth.vehicle.VehicleListResponse;
 import com.app.wheelsonadminapp.model.auth.vehicle.VehicleTypeResponse;
 import com.app.wheelsonadminapp.model.auth.vehicle.VehicletypeItem;
 import com.app.wheelsonadminapp.ui.home.HomeActivity;
-import com.app.wheelsonadminapp.ui.home.expense.AddExpenseFragment;
 import com.app.wheelsonadminapp.ui.home.trips.ViewVehicleTripFragment;
 import com.app.wheelsonadminapp.ui.home.vehicle.VehiclesAdapter;
 import com.app.wheelsonadminapp.util.AppConstants;
@@ -222,7 +221,12 @@ public class SelectVehicleFragment extends Fragment implements View.OnClickListe
 //                        homeActivity.replaceFragment(new AddExpenseFragment(),false,bundle);
                     }
                 }
-            });
+
+                @Override
+                public void onInActiveClicked(VehicleItem vehicleItem) {
+
+                }
+            }, true);
             binding.vehiclesRecycler.setAdapter(vehiclesAdapter);
         }
     }

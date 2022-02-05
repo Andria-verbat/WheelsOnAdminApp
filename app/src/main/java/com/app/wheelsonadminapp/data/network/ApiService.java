@@ -12,7 +12,10 @@ import com.app.wheelsonadminapp.model.expense.expense_list.ExpenseListResponse;
 import com.app.wheelsonadminapp.model.service.ServiceItemResponse;
 import com.app.wheelsonadminapp.model.service.vehicle_server_service.VehicleServiceListResponse;
 import com.app.wheelsonadminapp.model.service.vehicle_service.ServiceListResponse;
+import com.app.wheelsonadminapp.model.trip.PaymentStatusResponse;
+import com.app.wheelsonadminapp.model.trip.TripCloseResponse;
 import com.app.wheelsonadminapp.model.trip.TripResponse;
+import com.app.wheelsonadminapp.model.trip.closed_trips.ClosedTripResponse;
 import com.app.wheelsonadminapp.model.trip.trip_details.TripDetailsResponse;
 import com.app.wheelsonadminapp.model.trip.trip_track.TrackResponse;
 import com.app.wheelsonadminapp.model.trip.triplist.TripListResponse;
@@ -97,6 +100,9 @@ public interface ApiService {
     @POST("driver_registration.php")
     Call<DriverResponse> registerDriverNew(@Body RequestBody file);
 
+    @POST("trip_close.php")
+    Call<TripCloseResponse> closeTrip(@Body RequestBody file);
+
 
     @POST("driver_update.php")
     Call<DriverResponse> updateDriverNew(@Body RequestBody file);
@@ -157,11 +163,17 @@ public interface ApiService {
     @POST("trip_create.php")
     Call<TripResponse>addTrip(@Body JsonObject inputObject);
 
+    @POST("trip_update.php")
+    Call<TripResponse>updateTrip(@Body JsonObject inputObject);
+
     @POST("trip_date_list.php")
     Call<TripResponse>getTripsByDate(@Body JsonObject inputObject);
 
     @POST("trip_list.php")
     Call<TripListResponse>getTrips(@Body JsonObject inputObject);
+
+    @POST("trip_closed_list.php")
+    Call<ClosedTripResponse> getClosedTrips(@Body JsonObject inputObject);
 
     @POST("trip_live_list.php")
     Call<TripLiveListResponse>getLiveTrips(@Body JsonObject inputObject);
@@ -213,4 +225,8 @@ public interface ApiService {
 
     @POST("vehicle_delete.php")
     Call<JsonObject> deleteVehicle(@Body JsonObject inputObject);
+
+
+    @POST("trip_paystatus_list.php")
+    Call<PaymentStatusResponse>getPaymentStatus();
 }

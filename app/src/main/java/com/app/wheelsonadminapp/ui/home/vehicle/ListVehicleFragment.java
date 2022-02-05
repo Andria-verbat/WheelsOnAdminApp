@@ -126,7 +126,9 @@ public class ListVehicleFragment extends Fragment implements View.OnClickListene
                 vehicleBinding.rightLabels.collapse();
                 break;
             case R.id.fabAdd:
-                homeActivity.replaceFragment(new AddTripFragment(),true,null);
+                Bundle bundle1 = new Bundle();
+                bundle1.putString(AppConstants.TRIP_ID,"");
+                homeActivity.replaceFragment(new AddTripFragment(),true,bundle1);
                 break;
             case R.id.btViewByDate:
                 homeActivity.replaceFragment(new TripsFragment(),false,null);
@@ -301,7 +303,7 @@ public class ListVehicleFragment extends Fragment implements View.OnClickListene
             vehicleBinding.textNoVehicles.setVisibility(View.GONE);
             vehicleBinding.vehiclesRecycler.setVisibility(View.VISIBLE);
             vehicleBinding.vehiclesRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
-            VehiclesAdapter vehiclesAdapter = new VehiclesAdapter(vehicleListResponse.getVehicle() ,getActivity(),vehicleListResponse.getPath().toString(),this);
+            VehiclesAdapter vehiclesAdapter = new VehiclesAdapter(vehicleListResponse.getVehicle() ,getActivity(),vehicleListResponse.getPath().toString(),this,fromManageTrips);
             vehicleBinding.vehiclesRecycler.setAdapter(vehiclesAdapter);
         }
     }
@@ -319,6 +321,43 @@ public class ListVehicleFragment extends Fragment implements View.OnClickListene
             bundle.putString(AppConstants.IMAGE_PATH,imgPath);
             bundle.putParcelableArrayList(AppConstants.VEHICLE_TYPE_LIST, (ArrayList<? extends Parcelable>) spinnerItems);
             homeActivity.replaceFragment(new AddVehicleFragment(),true,bundle);
+        }
+    }
+
+    @Override
+    public void onInActiveClicked(VehicleItem vehicleItem) {
+        deleteVehicle(vehicleItem.getId());
+    }
+
+    private void deleteVehicle(String status) {
+        if(NetworkUtility.isOnline(getActivity())) {
+            JsonObject inputObject = new JsonObject();
+            inputObject.addProperty("vehicleid",status);
+
+            MessageProgressDialog.getInstance().show(getActivity());
+            Call<JsonObject>deleteApiCall = RetrofitClientInstance.getApiService().deleteVehicle(inputObject);
+            deleteApiCall.enqueue(new Callback<JsonObject>() {
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                    MessageProgressDialog.getInstance().dismiss();
+                    if(response.code() == 200 && response.body()!=null && response.body().has("status")){
+                        int status = response.body().get("status").getAsInt();
+                        if(status == 1){
+                            //homeActivity.onBackPressed();
+                            getVehicleList();
+                        }else {
+                            homeActivity.showSuccessToast("Trips assigned to this vehicle, cannot deactivate.");
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
+                    MessageProgressDialog.getInstance().dismiss();
+                }
+            });
+        }else {
+            homeActivity.showErrorToast(getString(R.string.no_internet));
         }
     }
 }

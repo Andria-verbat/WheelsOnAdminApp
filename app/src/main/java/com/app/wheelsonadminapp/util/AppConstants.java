@@ -7,6 +7,7 @@ public class AppConstants {
     public static final String DB_NAME = "AdminApp";
     public static final String IMAGE_PATH = "image_path";
     public static final String DRIVER = "driver";
+    public static final String CLOSED_TRIP = "closed_trip";
     public static final String VEHICLE = "vehicle";
     public static final String VEHICLE_TYPE_LIST = "vehicle_type_list";
     public static final String TRIP_ID = "trip_id";

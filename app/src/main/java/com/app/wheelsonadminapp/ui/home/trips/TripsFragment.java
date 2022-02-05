@@ -29,6 +29,7 @@ import com.app.wheelsonadminapp.model.trip.TripResponse;
 import com.app.wheelsonadminapp.ui.home.HomeActivity;
 import com.app.wheelsonadminapp.ui.home.HomeTripsAdapter;
 import com.app.wheelsonadminapp.ui.home.vehicle.ListVehicleFragment;
+import com.app.wheelsonadminapp.util.AppConstants;
 import com.app.wheelsonadminapp.util.MessageProgressDialog;
 import com.app.wheelsonadminapp.util.NetworkUtility;
 import com.app.wheelsonadminapp.util.horizontal_calendar.HorizontalCalendar;
@@ -169,7 +170,9 @@ public class TripsFragment extends Fragment implements View.OnClickListener, Tri
                 showCalendarDialog();
                 break;
             case R.id.fabAdd:
-                homeActivity.replaceFragment(new AddTripFragment(),true,null);
+                Bundle bundle1 = new Bundle();
+                bundle1.putString(AppConstants.TRIP_ID,"");
+                homeActivity.replaceFragment(new AddTripFragment(),true,bundle1);
                 break;
             case R.id.btViewByVehicle:
                 Bundle bundle = new Bundle();
@@ -240,5 +243,9 @@ public class TripsFragment extends Fragment implements View.OnClickListener, Tri
     @Override
     public void OnTripClicked(TripItem tripItem) {
 
+        System.out.println("clicked"+tripItem.getDriverName());
+        Bundle bundle = new Bundle();
+        bundle.putString(AppConstants.TRIP_ID,tripItem.getId());
+        homeActivity.replaceFragment(new ViewRunTripFragment(),true,bundle);
     }
 }

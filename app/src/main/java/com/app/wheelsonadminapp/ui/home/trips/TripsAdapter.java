@@ -47,7 +47,7 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.TripViewMode
         }
 
         holder.textVehicleName.setVisibility(View.INVISIBLE);
-        holder.textAmount.setText(tripItem.getAmount());
+        holder.textAmount.setText("Rs."+tripItem.getAmount());
         holder.parentCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
