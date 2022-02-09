@@ -17,7 +17,9 @@ import com.app.wheelsonadminapp.data.network.RetrofitClientInstance;
 import com.app.wheelsonadminapp.databinding.FragmentEmailLoginBinding;
 import com.app.wheelsonadminapp.model.auth.login.LoginResponse;
 import com.app.wheelsonadminapp.ui.home.HomeActivity;
+import com.app.wheelsonadminapp.util.AppConstants;
 import com.app.wheelsonadminapp.util.MessageProgressDialog;
+import com.app.wheelsonadminapp.util.MyFirebaseMessagingService;
 import com.app.wheelsonadminapp.util.NetworkUtility;
 import com.google.gson.JsonObject;
 
@@ -53,6 +55,8 @@ public class EmailLoginFragment extends Fragment {
                 }else if(emailLoginBinding.etPassword.getText().length() == 0){
                     signUpActivity.showErrorToast("Please enter the password");
                 }else {
+                    MyFirebaseMessagingService.getToken();
+                    System.out.println("tokennn"+AppConstants.DEVICE_TOKEN);
                     loginUser();
                 }
             }
@@ -72,6 +76,8 @@ public class EmailLoginFragment extends Fragment {
             JsonObject loginObject = new JsonObject();
             loginObject.addProperty("username",emailLoginBinding.etEmail.getText().toString());
             loginObject.addProperty("password",emailLoginBinding.etPassword.getText().toString());
+            loginObject.addProperty("deviceid", AppConstants.DEVICE_TOKEN);
+
             ApiService apiService = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
             Call<LoginResponse>loginResponseCall = apiService.loginUser(loginObject);
             loginResponseCall.enqueue(new Callback<LoginResponse>() {

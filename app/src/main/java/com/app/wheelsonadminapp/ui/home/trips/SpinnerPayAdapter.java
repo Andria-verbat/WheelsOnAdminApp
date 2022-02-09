@@ -56,7 +56,7 @@ public class SpinnerPayAdapter extends ArrayAdapter<PaymentStatusItem> {
         // It is used the name to the TextView when the
         // current item is not null.
         if (currentItem != null) {
-            textViewName.setText(currentItem.getPayname()+" "+currentItem.getPayid());
+            textViewName.setText(currentItem.getPayname());
         }
         return convertView;
     }

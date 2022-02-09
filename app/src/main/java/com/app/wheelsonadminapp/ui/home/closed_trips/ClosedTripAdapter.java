@@ -70,6 +70,13 @@ public class ClosedTripAdapter extends RecyclerView.Adapter<ClosedTripAdapter.Cl
               closedTripClick.onClosedTripClicked(closedTripItem,imgPath);
             }
         });
+
+        holder.textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closedTripClick.onClosedTripClicked(closedTripItem,imgPath);
+            }
+        });
     }
 
     @Override
@@ -79,12 +86,13 @@ public class ClosedTripAdapter extends RecyclerView.Adapter<ClosedTripAdapter.Cl
 
     class ClosedTripViewModel  extends RecyclerView.ViewHolder{
 
-        TextView fromto,startDate,endDate,startKM,endKM,driverName;
+        TextView fromto,startDate,endDate,startKM,endKM,driverName,textView;
         MaterialCardView parentCardView;
         ImageView imgProfile;
 
         public ClosedTripViewModel(@NonNull View itemView) {
             super(itemView);
+            textView=itemView.findViewById(R.id.textView);
             fromto = itemView.findViewById(R.id.fromto);
             startDate = itemView.findViewById(R.id.startDate);
             endDate = itemView.findViewById(R.id.endDate);

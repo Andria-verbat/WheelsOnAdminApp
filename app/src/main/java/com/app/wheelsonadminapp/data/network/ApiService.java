@@ -8,6 +8,8 @@ import com.app.wheelsonadminapp.model.auth.vehicle.VehicleListResponse;
 import com.app.wheelsonadminapp.model.auth.vehicle.VehicleTypeResponse;
 import com.app.wheelsonadminapp.model.driver.DriverResponse;
 import com.app.wheelsonadminapp.model.expense.ExpenseItemListResponse;
+import com.app.wheelsonadminapp.model.expense.closedTrip.ClosedTripExpenseListResponse;
+import com.app.wheelsonadminapp.model.expense.closedTrip.ClosedTripExpenseResponse;
 import com.app.wheelsonadminapp.model.expense.expense_list.ExpenseListResponse;
 import com.app.wheelsonadminapp.model.service.ServiceItemResponse;
 import com.app.wheelsonadminapp.model.service.vehicle_server_service.VehicleServiceListResponse;
@@ -102,6 +104,18 @@ public interface ApiService {
 
     @POST("trip_close.php")
     Call<TripCloseResponse> closeTrip(@Body RequestBody file);
+
+    @POST("trip_close.php")
+    Call<ClosedTripExpenseResponse> addExpenseClosedTrip(@Body RequestBody file);
+
+    @POST("trip_expense_update.php")
+    Call<ClosedTripExpenseResponse> updateExpenseClosedTrip(@Body RequestBody file);
+
+    @POST("trip_expense_delete.php")
+    Call<JsonObject>deleteExpenseClosedTrip(@Body JsonObject inoutObject);
+
+    @POST("trip_expense_list.php")
+    Call<ClosedTripExpenseListResponse>getExpenseClosedTrips(@Body JsonObject inputObject);
 
 
     @POST("driver_update.php")

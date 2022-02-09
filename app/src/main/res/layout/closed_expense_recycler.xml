@@ -18,26 +18,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <androidx.cardview.widget.CardView
-            app:cardCornerRadius="8dp"
-            android:layout_margin="5dp"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
             android:id="@+id/cardImage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_centerVertical="true"
-            android:layout_marginBottom="10dp"
-            android:elevation="10dp">
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:elevation="10dp"
+            app:cardCornerRadius="8dp">
 
             <ImageView
                 android:id="@+id/imgProfile"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/avatar_square"
-                android:background="@color/white"
+                android:background="@color/blue_dark"
                 android:scaleType="centerCrop"
-                />
+                android:src="@drawable/ic_baseline_payments_24" />
         </androidx.cardview.widget.CardView>
 
 
@@ -48,58 +47,28 @@
             android:layout_toEndOf="@id/cardImage"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginStart="2dp"
+            android:layout_marginStart="10dp"
             android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/button_dark"
                 android:textSize="16sp"
-                android:id="@+id/textName"
+                android:id="@+id/textExpenseName"
                 android:fontFamily="@font/century_gothic"
-                android:text="Driver Name"/>
+                android:text="Expense Name:"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:id="@+id/textMobile"
+                android:textSize="16sp"
+                android:id="@+id/textAmount"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/century_gothic"
                 android:textColor="@color/grey_dark"
-                android:visibility="gone"
-                android:text="Location:"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:id="@+id/textLicenceNo"
-                android:fontFamily="@font/century_gothic"
-                android:textColor="@color/grey_dark"
-                android:text="Licence No:"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:id="@+id/licenceValidity"
-                android:fontFamily="@font/century_gothic"
-                android:textColor="@color/grey_dark"
-                android:text="Valid Till:"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:id="@+id/textCategory"
-                android:fontFamily="@font/century_gothic"
-                android:textColor="@color/grey_dark"
-                android:text="Category:"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:id="@+id/textExperience"
-                android:fontFamily="@font/century_gothic"
-                android:textColor="@color/grey_dark"
-                android:text="Experience:"/>
+
+                android:text="Amount:"/>
+
         </LinearLayout>
 
         <TextView

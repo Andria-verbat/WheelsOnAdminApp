@@ -4,9 +4,11 @@ import static android.app.Activity.RESULT_CANCELED;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.ImageDecoder;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
@@ -17,7 +19,13 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -34,11 +42,14 @@ import com.app.wheelsonadminapp.databinding.FragmentAddDriverBinding;
 import com.app.wheelsonadminapp.databinding.FragmentClosedTripUpdateBinding;
 import com.app.wheelsonadminapp.model.driver.DriverItem;
 import com.app.wheelsonadminapp.model.driver.DriverResponse;
+import com.app.wheelsonadminapp.model.expense.closedTrip.ClosedTripExpenseResponse;
+import com.app.wheelsonadminapp.model.service.VehicleServiceItem;
 import com.app.wheelsonadminapp.model.states.DistrictsItem;
 import com.app.wheelsonadminapp.model.states.StatesItem;
 import com.app.wheelsonadminapp.model.states.StatesResponse;
 import com.app.wheelsonadminapp.model.trip.TripCloseResponse;
 import com.app.wheelsonadminapp.model.trip.closed_trips.ClosedTripItems;
+import com.app.wheelsonadminapp.model.trip.triplist.TripLiveListResponse;
 import com.app.wheelsonadminapp.ui.home.HomeActivity;
 import com.app.wheelsonadminapp.ui.home.driver.DriverActivity;
 import com.app.wheelsonadminapp.util.AppConstants;
@@ -46,6 +57,7 @@ import com.app.wheelsonadminapp.util.MessageProgressDialog;
 import com.app.wheelsonadminapp.util.NetworkUtility;
 import com.app.wheelsonadminapp.util.Utils;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -67,6 +79,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -83,7 +96,7 @@ public class ClosedTripUpdateFragment extends Fragment implements View.OnClickLi
 
     FragmentClosedTripUpdateBinding closedTripUpdateBinding;
     private int GALLERY = 1, CAMERA = 2;
-    String startSpeedo,closeSpeedo;
+    String startSpeedo,closeSpeedo,expenseImg;
     File photoFile = null;
     int mode = 0;
 
@@ -94,6 +107,7 @@ public class ClosedTripUpdateFragment extends Fragment implements View.OnClickLi
 
     ClosedTripItems closedTripItems;
     String imgPath;
+    ImageView imgExpense;
 
 
 
@@ -115,6 +129,8 @@ public class ClosedTripUpdateFragment extends Fragment implements View.OnClickLi
         closedTripUpdateBinding.frameEndSpeedo.setOnClickListener(this);
         closedTripUpdateBinding.frameStartSpeedo.setOnClickListener(this);
         closedTripUpdateBinding.btUpdateTrip.setOnClickListener(this);
+        closedTripUpdateBinding.fabaddExpense.setOnClickListener(this);
+        closedTripUpdateBinding.fabViewExpense.setOnClickListener(this);
 
         if(closedTripItems!=null){
             loadData(closedTripItems);
@@ -226,9 +242,91 @@ public class ClosedTripUpdateFragment extends Fragment implements View.OnClickLi
                 mode = 2;
                 requestMultiplePermissions();
                 break;
+            case R.id.fabaddExpense:
+                showExpenseAddDialog();
+                break;
+            case R.id.fabViewExpense:
+                Bundle serviceBundle =  new Bundle();
+                serviceBundle.putString("tripid",closedTripItems.getId());
+                homeActivity.replaceFragment(new CloseTripExpenseViewFragment(),true,serviceBundle);
+                break;
 
 
         }
+    }
+
+
+    private void showExpenseAddDialog(){
+        Dialog dialog = new Dialog(getActivity(),R.style.PauseDialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.add_expense_close_trip);
+        Button btAdd = dialog.findViewById(R.id.btAdd);
+        EditText etExpenseAmt = dialog.findViewById(R.id.etExpenseAmt);
+        EditText etExpenseName=dialog.findViewById(R.id.etExpenseName);
+        FrameLayout frameExpense=dialog.findViewById(R.id.frameExpense);
+        imgExpense=dialog.findViewById(R.id.imgExpense);
+        frameExpense.setOnClickListener(v -> {
+            mode=3;
+            requestMultiplePermissions();
+        });
+
+        btAdd.setOnClickListener(v -> {
+            if(!etExpenseAmt.getText().toString().equals("")&&!etExpenseName.getText().toString().equals("")){
+                if(NetworkUtility.isOnline(homeActivity)){
+                    AppRepository appRepository = new AppRepository(getActivity());
+                    MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+                    builder.addFormDataPart("tripid",closedTripItems.getId());
+                    builder.addFormDataPart("remark",etExpenseName.getText().toString());
+                    builder.addFormDataPart("amount",etExpenseAmt.getText().toString());
+
+                    MessageProgressDialog.getInstance().show(getActivity());
+
+                    if(expenseImg != null && expenseImg.length()!=0){
+                        File expenseImgFile = new File(expenseImg);
+                        if(expenseImgFile.exists()){
+                            builder.addFormDataPart("expenseimg", expenseImgFile.getName(),
+                                    RequestBody.create(expenseImgFile, MediaType.parse("multipart/form-data")));
+                        }
+
+                    }
+
+
+                    RequestBody requestBody = builder.build();
+                    ApiService apiService = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
+                    Call<ClosedTripExpenseResponse> tripResponseCall = null;
+                    tripResponseCall = apiService.addExpenseClosedTrip(requestBody);
+
+                    tripResponseCall.enqueue(new Callback<ClosedTripExpenseResponse>() {
+                        @Override
+                        public void onResponse(Call<ClosedTripExpenseResponse> call, Response<ClosedTripExpenseResponse> response) {
+                            MessageProgressDialog.getInstance().dismiss();
+                            if(response.code() == 200 && response.body()!=null){
+                                if(response.body().getStatus() == 1){
+                                    dialog.dismiss();
+                                    homeActivity.showSuccessToast("Successfully added expense");
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ClosedTripExpenseResponse> call, Throwable t) {
+                            MessageProgressDialog.getInstance().dismiss();
+                        }
+                    });
+
+                }else {
+                    homeActivity.showErrorToast(getString(R.string.no_internet));
+                    dialog.dismiss();
+                }
+
+            }else {
+                homeActivity.showErrorToast("Please enter the both expense name and amount");
+            }
+
+        });
+        Objects.requireNonNull(dialog.getWindow()).getDecorView().setBackgroundColor(Color.TRANSPARENT);
+        dialog.show();
     }
 
     @Override
@@ -260,6 +358,13 @@ public class ClosedTripUpdateFragment extends Fragment implements View.OnClickLi
                             closedTripUpdateBinding.imgEndSpeedo.setImageBitmap(bitmap);
                             mode = 0;
                             break;
+                        case 3:
+                            expenseImg = saveImage(bitmap);
+                            imgExpense.setImageBitmap(bitmap);
+                            mode = 0;
+                            break;
+
+
 
                     }
 
@@ -379,6 +484,7 @@ public class ClosedTripUpdateFragment extends Fragment implements View.OnClickLi
 
 
 
+
     private void loadData(ClosedTripItems closedTripItems){
         closedTripUpdateBinding.textStartLocation.setText("Starting from : "+closedTripItems.getFromlocation());
         closedTripUpdateBinding.textDropLocation.setText("Dropping to : "+closedTripItems.getTolocation());
@@ -402,26 +508,7 @@ public class ClosedTripUpdateFragment extends Fragment implements View.OnClickLi
         Picasso.get().load(AppConstants.SERVER_URL+imgPath+closedTripItems.getEndimage())
                 .centerCrop().placeholder(R.drawable.app_logo).resize(125,125).into(closedTripUpdateBinding.imgEndSpeedo);
 
-       /* addDriverBinding.textDrivers.setText(driverItem.getName());
-        addDriverBinding.textManage.setText("Edit driver details");
-        addDriverBinding.etName.setText(driverItem.getName());
-        addDriverBinding.etMobile.setText(driverItem.getMobile());
-        addDriverBinding.etAddress.setText(driverItem.getAddress());
-        addDriverBinding.etCity.setText(driverItem.getCity());
-        addDriverBinding.etLicence.setText(driverItem.getLicenseno());
-        addDriverBinding.etLicenceValidity.setText(driverItem.getLicensevalidity());
-        addDriverBinding.etAadhaar.setText(driverItem.getAadharno());
-        addDriverBinding.etExperience.setText(driverItem.getExperience());
-        addDriverBinding.etPoliceStation.setText(driverItem.getPolicestation());
-        addDriverBinding.imgProfile.setVisibility(View.VISIBLE);
 
-
-        Picasso.get().load(AppConstants.SERVER_URL+imgPath+driverItem.getLicensebackimg())
-                .centerCrop().placeholder(R.drawable.app_logo).resize(125,125).into(addDriverBinding.imgLicenceBack);
-        Picasso.get().load(AppConstants.SERVER_URL+imgPath+driverItem.getAadharfrontimg())
-                .centerCrop().placeholder(R.drawable.app_logo).resize(125,125).into(addDriverBinding.imgAdhaarFront);
-        Picasso.get().load(AppConstants.SERVER_URL+imgPath+driverItem.getAadharbackimg())
-                .centerCrop().placeholder(R.drawable.app_logo).resize(125,125).into(addDriverBinding.imgAdhaarBack);*/
 
 
     }

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "664404885878",
+    "project_id": "wheelsowner-test",
+    "storage_bucket": "wheelsowner-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:664404885878:android:56d94a6068f02a60297a57",
+        "android_client_info": {
+          "package_name": "com.app.wheelsonadminapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "664404885878-gj45bojohgm9vfpf41i2bouprqio9oid.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.wheelsonadminapp",
+            "certificate_hash": "1b09b24e66417caa06b6014e80a9feb1c41218df"
+          }
+        },
+        {
+          "client_id": "664404885878-gtmkns97iatl257tkmjia5iubeavfhte.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4XV17bEh-Rwzw_tFGtMiZlyZbE_yYaX4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "664404885878-gtmkns97iatl257tkmjia5iubeavfhte.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
